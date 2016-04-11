@@ -1,10 +1,7 @@
 package io.objecthub.filesync.tests;
 
-import com.appjangle.api.Link;
-import com.appjangle.api.Query;
 import de.mxro.file.FileItem;
 import de.oehme.xtend.junit.JUnit;
-import io.objecthub.filesync.internal.engine.N;
 import io.objecthub.filesync.tests.CheckNodesToFilesTemplate;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure0;
@@ -17,14 +14,8 @@ import org.junit.internal.ArrayComparisonFailure;
 public class TestCreateHtmlFile extends CheckNodesToFilesTemplate {
   @Override
   protected void step1_defineData() {
-    final Query html = this.source.append("<html></html>", "./html");
-    Query _append = html.append("Html Document");
-    String _LABEL = N.LABEL();
-    Link _link = this.session.link(_LABEL);
-    _append.append(_link);
-    String _HTML_VALUE = N.HTML_VALUE();
-    Link _link_1 = this.session.link(_HTML_VALUE);
-    html.append(_link_1);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method LABEL is undefined for the type TestCreateHtmlFile");
   }
   
   @Override

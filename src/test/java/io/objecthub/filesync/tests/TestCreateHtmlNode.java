@@ -1,11 +1,5 @@
 package io.objecthub.filesync.tests;
 
-import com.appjangle.api.Client;
-import com.appjangle.api.Link;
-import com.appjangle.api.ListQuery;
-import com.appjangle.api.Node;
-import com.appjangle.api.NodeList;
-import com.appjangle.api.Query;
 import de.mxro.file.FileItem;
 import de.oehme.xtend.junit.Hamcrest;
 import de.oehme.xtend.junit.JUnit;
@@ -34,24 +28,8 @@ public class TestCreateHtmlNode extends CheckFilesToNodesTemplate {
   
   @Override
   protected void step2_assertNodes() {
-    Query _select = this.result.select("./My_Document");
-    final Node node = _select.get();
-    Link _HTML_VALUE = this.n.HTML_VALUE(this.session);
-    ListQuery _selectAll = this.result.selectAll(_HTML_VALUE);
-    NodeList _get = _selectAll.get();
-    int _size = _get.size();
-    Matcher<Integer> _equalTo = TestCreateHtmlNode.<Integer>equalTo(Integer.valueOf(1));
-    this.<Integer>operator_doubleArrow(Integer.valueOf(_size), _equalTo);
-    Object _value = node.value();
-    Matcher<Object> _equalTo_1 = TestCreateHtmlNode.<Object>equalTo("<html></html>");
-    this.<Object>operator_doubleArrow(_value, _equalTo_1);
-    Client _client = node.client();
-    Link _LABEL = this.n.LABEL(_client);
-    Query _select_1 = node.select(_LABEL);
-    Node _get_1 = _select_1.get();
-    Object _value_1 = _get_1.value();
-    Matcher<Object> _equalTo_2 = TestCreateHtmlNode.<Object>equalTo("My Document");
-    this.<Object>operator_doubleArrow(_value_1, _equalTo_2);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method LABEL is undefined for the type TestCreateHtmlNode");
   }
   
   @Extension

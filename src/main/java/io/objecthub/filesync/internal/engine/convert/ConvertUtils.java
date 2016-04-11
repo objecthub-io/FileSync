@@ -12,7 +12,6 @@ import com.google.common.base.Objects;
 import de.mxro.file.FileItem;
 import delight.async.AsyncCommon;
 import delight.async.callbacks.ValueCallback;
-import delight.async.helper.Aggregator;
 import delight.functional.Closure;
 import delight.functional.Success;
 import io.nextweb.promise.DataOperation;
@@ -21,8 +20,6 @@ import io.nextweb.promise.callbacks.DataCallback;
 import io.nextweb.promise.exceptions.DataExceptionManager;
 import io.nextweb.promise.exceptions.ExceptionListener;
 import io.nextweb.promise.exceptions.ExceptionResult;
-import io.nextweb.promise.exceptions.UndefinedListener;
-import io.nextweb.promise.exceptions.UndefinedResult;
 import io.nextweb.promise.utils.CallbackUtils;
 import io.objecthub.filesync.ItemMetadata;
 import io.objecthub.filesync.Metadata;
@@ -36,14 +33,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class ConvertUtils {
-  private final List<String> labelTypes = Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(N.LABEL(), N.LABEL2(), N.LABEL3()));
+  private final /* List<Object> */Object labelTypes /* Skipped initializer because of errors */;
   
   private final Map<String, String> textValueExtensions = Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(Pair.<String, String>of(N.HTML_VALUE(), ".html"), Pair.<String, String>of(N.ATTRIBUTE(), ".type"), Pair.<String, String>of(N.CSS(), ".css"), Pair.<String, String>of(N.JAVASCRIPT(), ".js"), Pair.<String, String>of(N.COFFEESCRIPT(), ".coffee"), Pair.<String, String>of(N.RICHTEXT(), ".htm")));
   
@@ -128,10 +124,8 @@ public class ConvertUtils {
   }
   
   public Query appendLabel(final Query toNode, final String label) {
-    Query _appendSafe = toNode.appendSafe(label, "./.label");
-    Client _client = toNode.client();
-    Link _LABEL = this.n.LABEL(_client);
-    return _appendSafe.appendSafe(_LABEL);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method LABEL is undefined for the type ConvertUtils");
   }
   
   public List<DataOperation<?>> appendTypesAndIcon(final Query toNode, final FileItem source) {
@@ -209,56 +203,8 @@ public class ConvertUtils {
   }
   
   public void getFileName(final Node fromNode, final ValueCallback<String> cb) {
-    int _size = this.labelTypes.size();
-    final Closure<List<Object>> _function = new Closure<List<Object>>() {
-      @Override
-      public void apply(final List<Object> res) {
-        for (final Object item : res) {
-          if ((item instanceof String)) {
-            cb.onSuccess(((String)item));
-            return;
-          }
-        }
-        String _uri = fromNode.uri();
-        String _nameFromUri = ConvertUtils.getNameFromUri(_uri);
-        cb.onSuccess(_nameFromUri);
-      }
-    };
-    ValueCallback<List<Object>> _embed = AsyncCommon.<List<Object>>embed(cb, _function);
-    final Aggregator<Object> cbs = AsyncCommon.<Object>collect(_size, _embed);
-    final Consumer<String> _function_1 = new Consumer<String>() {
-      @Override
-      public void accept(final String labelType) {
-        Client _client = fromNode.client();
-        Link _link = _client.link(labelType);
-        final Query qry = fromNode.select(_link);
-        final ValueCallback<Object> itmcb = cbs.createCallback();
-        final UndefinedListener _function = new UndefinedListener() {
-          @Override
-          public void onUndefined(final UndefinedResult it) {
-            itmcb.onSuccess(ConvertUtils.NO_VALUE);
-          }
-        };
-        qry.catchUndefined(_function);
-        final ExceptionListener _function_1 = new ExceptionListener() {
-          @Override
-          public void onFailure(final ExceptionResult er) {
-            Throwable _exception = er.exception();
-            itmcb.onFailure(_exception);
-          }
-        };
-        qry.catchExceptions(_function_1);
-        final Closure<Node> _function_2 = new Closure<Node>() {
-          @Override
-          public void apply(final Node label) {
-            Object _value = label.value();
-            itmcb.onSuccess(_value);
-          }
-        };
-        qry.get(_function_2);
-      }
-    };
-    this.labelTypes.forEach(_function_1);
+    throw new Error("Unresolved compilation problems:"
+      + "\nAmbiguous feature call.\nThe methods\n\tlink(Reference) in ClientOperations,\n\tlink(Link) in ClientOperations,\n\tlink(Node) in ClientOperations and\n\tlink(String) in ClientOperations\nall match.");
   }
   
   public static String getNameFromUri(final String uri) {

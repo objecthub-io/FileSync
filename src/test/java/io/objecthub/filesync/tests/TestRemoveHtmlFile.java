@@ -1,6 +1,5 @@
 package io.objecthub.filesync.tests;
 
-import com.appjangle.api.Link;
 import com.appjangle.api.Node;
 import com.appjangle.api.Query;
 import de.mxro.file.FileItem;
@@ -28,24 +27,10 @@ import org.junit.internal.ArrayComparisonFailure;
 public class TestRemoveHtmlFile extends CheckUpdatesTemplate {
   @Override
   protected void step1_defineData() {
-    final Query file1 = this.source.append("<p>file1</p>", "./file1");
-    Query _append = file1.append("html1", "./label");
-    Link _LABEL = this.n.LABEL(this.session);
-    _append.append(_LABEL);
-    Link _HTML_VALUE = this.n.HTML_VALUE(this.session);
-    file1.append(_HTML_VALUE);
-    final Query file2 = this.source.append("file2", "./file2");
-    Query _append_1 = file2.append("html2");
-    Link _LABEL_1 = this.n.LABEL(this.session);
-    _append_1.append(_LABEL_1);
-    Link _HTML_VALUE_1 = this.n.HTML_VALUE(this.session);
-    file2.append(_HTML_VALUE_1);
-    final Query file3 = this.source.append("file3", "./file3");
-    Query _append_2 = file3.append("html3");
-    Link _LABEL_2 = this.n.LABEL(this.session);
-    _append_2.append(_LABEL_2);
-    Link _HTML_VALUE_2 = this.n.HTML_VALUE(this.session);
-    file3.append(_HTML_VALUE_2);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method LABEL is undefined for the type TestRemoveHtmlFile"
+      + "\nThe method LABEL is undefined for the type TestRemoveHtmlFile"
+      + "\nThe method LABEL is undefined for the type TestRemoveHtmlFile");
   }
   
   @Override
@@ -60,15 +45,8 @@ public class TestRemoveHtmlFile extends CheckUpdatesTemplate {
   
   @Override
   protected void step3_updateNodes() {
-    final Query html = this.source.select("./file1");
-    Query _select = html.select("./label");
-    Link _LABEL = this.n.LABEL(this.session);
-    _select.remove(_LABEL);
-    Query _select_1 = html.select("./label");
-    html.remove(_select_1);
-    Link _HTML_VALUE = this.n.HTML_VALUE(this.session);
-    html.remove(_HTML_VALUE);
-    this.source.remove(html);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method LABEL is undefined for the type TestRemoveHtmlFile");
   }
   
   @Override

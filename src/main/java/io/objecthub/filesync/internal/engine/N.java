@@ -24,23 +24,6 @@ public class N {
     return N.getType(client, "html");
   }
   
-  public static String LABEL() {
-    return "https://u1.linnk.it/qc8sbw/usr/apps/textsync/files/shortLabel";
-  }
-  
-  public Link LABEL(final Client session) {
-    String _LABEL = N.LABEL();
-    return session.link(_LABEL);
-  }
-  
-  public static String LABEL2() {
-    return "https://u1.linnk.it/qc8sbw/usr/apps/textsync/upload/label";
-  }
-  
-  public static String LABEL3() {
-    return "https://u1.linnk.it/qc8sbw/usr/apps/textsync/files/longLabel";
-  }
-  
   public static String COFFEESCRIPT() {
     return N.getTypeLink("plain-cs");
   }

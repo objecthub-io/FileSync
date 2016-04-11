@@ -36,6 +36,7 @@ public class FolderToNode implements Converter {
   @Override
   public void createNodes(final Metadata metadata, final FileItem source, final ValueCallback<List<NetworkOperation>> cb) {
     throw new Error("Unresolved compilation problems:"
+      + "\nThe method LABEL is undefined for the type FolderToNode"
       + "\nThe method ICON is undefined for the type FolderToNode");
   }
   

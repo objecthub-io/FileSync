@@ -1,8 +1,5 @@
 package io.objecthub.filesync.tests;
 
-import com.appjangle.api.Client;
-import com.appjangle.api.Link;
-import com.appjangle.api.Query;
 import de.mxro.file.FileItem;
 import de.oehme.xtend.junit.JUnit;
 import io.objecthub.filesync.internal.engine.N;
@@ -24,28 +21,8 @@ public class TestRecursiveSync extends CheckNodesToFilesTemplate {
   
   @Override
   protected void step1_defineData() {
-    Query _append = this.source.append("oh my", "./node1");
-    _append.append("And in the subfolder", "./sub");
-    Query _append_1 = this.source.append("Hello");
-    _append_1.append("Any another foder");
-    final Query node3 = this.source.append("node3", "./node3");
-    Query _append_2 = node3.append("child1", "./child1");
-    Query _append_3 = _append_2.append("b", "./inThere");
-    _append_3.get();
-    Query _append_4 = node3.append("child2");
-    _append_4.append("c");
-    final Query html = node3.append("<html></html>", "./html");
-    Query _append_5 = html.append("My Html Document", "./.label");
-    Client _client = this.source.client();
-    Link _LABEL = this.n.LABEL(_client);
-    _append_5.append(_LABEL);
-    Client _client_1 = this.source.client();
-    Link _HTML_VALUE = this.n.HTML_VALUE(_client_1);
-    html.append(_HTML_VALUE);
-    Query _append_6 = this.source.append("node4", "./node4");
-    Client _client_2 = this.source.client();
-    Link _link = _client_2.link("http://slicnet.com/mxrogm/mxrogm/data/stream/2013/12/3/n1");
-    _append_6.append(_link);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method LABEL is undefined for the type TestRecursiveSync");
   }
   
   @Override
