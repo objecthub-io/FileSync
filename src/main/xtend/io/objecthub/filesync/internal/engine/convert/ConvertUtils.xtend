@@ -23,7 +23,7 @@ import io.nextweb.promise.DataOperation
 
 class ConvertUtils {
 
-	val labelTypes = #[N.LABEL, N.LABEL2, N.LABEL3]
+	
 
 	val textValueExtensions = #{
 		N.HTML_VALUE -> '.html',
@@ -96,7 +96,8 @@ class ConvertUtils {
 	}
 
 	def appendLabel(Query toNode, String label) {
-		toNode.appendSafe(label, "./.label").appendSafe(toNode.client().LABEL)
+		throw new RuntimeException('Not supported!')
+		//toNode.appendSafe(label, "./.label").appendSafe(toNode.client().LABEL)
 	}
 
 	def List<DataOperation<?>> appendTypesAndIcon(Query toNode, FileItem source) {
@@ -154,7 +155,9 @@ class ConvertUtils {
 		
 		
 		
-	 	res
+	 	// res
+	 	
+	 	throw new RuntimeException('Not supported!')
 		
 	}
 	
@@ -178,6 +181,9 @@ class ConvertUtils {
 	}
 
 	def getFileName(Node fromNode, ValueCallback<String> cb) {
+
+		fromNode.
+
 
 		val cbs = AsyncCommon.collect(labelTypes.size,
 			cb.embed(

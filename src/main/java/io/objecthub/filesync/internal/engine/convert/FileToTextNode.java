@@ -67,58 +67,8 @@ public class FileToTextNode implements Converter {
   
   @Override
   public void createNodes(final Metadata metadata, final FileItem source, final ValueCallback<List<NetworkOperation>> cb) {
-    String _name = source.getName();
-    final String nameWithoutExtension = this.futils.removeExtension(_name);
-    final String simpleName = this.futils.getSimpleName(nameWithoutExtension);
-    final LinkedList<NetworkOperation> ops = new LinkedList<NetworkOperation>();
-    final NetworkOperation _function = new NetworkOperation() {
-      @Override
-      public void apply(final NetworkOperationContext ctx, final ValueCallback<List<DataOperation<?>>> opscb) {
-        Node _parent = ctx.parent();
-        String _text = source.getText();
-        final Query baseNode = _parent.appendSafe(_text, ("./" + simpleName));
-        metadata.add(
-          new ItemMetadata() {
-            @Override
-            public String name() {
-              return source.getName();
-            }
-            
-            @Override
-            public Date lastModified() {
-              return source.lastModified();
-            }
-            
-            @Override
-            public String uri() {
-              Node _parent = ctx.parent();
-              String _uri = _parent.uri();
-              String _plus = (_uri + "/");
-              return (_plus + simpleName);
-            }
-            
-            @Override
-            public String hash() {
-              return source.hash();
-            }
-            
-            @Override
-            public String converter() {
-              Class<? extends FileToTextNode> _class = FileToTextNode.this.getClass();
-              return _class.toString();
-            }
-          });
-        final ArrayList<DataOperation<?>> res = CollectionLiterals.<DataOperation<?>>newArrayList();
-        res.add(baseNode);
-        Query _appendLabel = FileToTextNode.this.cutils.appendLabel(baseNode, nameWithoutExtension);
-        res.add(_appendLabel);
-        List<DataOperation<?>> _appendTypesAndIcon = FileToTextNode.this.cutils.appendTypesAndIcon(baseNode, source);
-        res.addAll(_appendTypesAndIcon);
-        opscb.onSuccess(res);
-      }
-    };
-    ops.add(_function);
-    cb.onSuccess(ops);
+    throw new Error("Unresolved compilation problems:"
+      + "\nType mismatch: cannot convert from void to DataOperation<?>");
   }
   
   @Override

@@ -39,8 +39,6 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class ConvertUtils {
-  private final /* List<Object> */Object labelTypes /* Skipped initializer because of errors */;
-  
   private final Map<String, String> textValueExtensions = Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(Pair.<String, String>of(N.HTML_VALUE(), ".html"), Pair.<String, String>of(N.ATTRIBUTE(), ".type"), Pair.<String, String>of(N.CSS(), ".css"), Pair.<String, String>of(N.JAVASCRIPT(), ".js"), Pair.<String, String>of(N.COFFEESCRIPT(), ".coffee"), Pair.<String, String>of(N.RICHTEXT(), ".htm")));
   
   public boolean isTextValue(final String fileName) {
@@ -123,67 +121,62 @@ public class ConvertUtils {
     cb.onSuccess(ops);
   }
   
-  public Query appendLabel(final Query toNode, final String label) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method LABEL is undefined for the type ConvertUtils");
+  public void appendLabel(final Query toNode, final String label) {
+    throw new RuntimeException("Not supported!");
   }
   
   public List<DataOperation<?>> appendTypesAndIcon(final Query toNode, final FileItem source) {
-    ArrayList<DataOperation<?>> _xblockexpression = null;
-    {
-      final ArrayList<DataOperation<?>> res = CollectionLiterals.<DataOperation<?>>newArrayList();
-      final Client session = toNode.client();
-      String ext = source.getExtension();
-      ext = ("." + ext);
-      boolean _equals = Objects.equal(ext, ".html");
-      if (_equals) {
-        Link _HTML_VALUE = this.n.HTML_VALUE(session);
-        Query _appendSafe = toNode.appendSafe(_HTML_VALUE);
-        res.add(_appendSafe);
+    final ArrayList<Query> res = CollectionLiterals.<Query>newArrayList();
+    final Client session = toNode.client();
+    String ext = source.getExtension();
+    ext = ("." + ext);
+    boolean _equals = Objects.equal(ext, ".html");
+    if (_equals) {
+      Link _HTML_VALUE = this.n.HTML_VALUE(session);
+      Query _appendSafe = toNode.appendSafe(_HTML_VALUE);
+      res.add(_appendSafe);
+    } else {
+      boolean _equals_1 = Objects.equal(ext, ".htm");
+      if (_equals_1) {
+        Link _RICHTEXT = this.n.RICHTEXT(session);
+        Query _appendSafe_1 = toNode.appendSafe(_RICHTEXT);
+        res.add(_appendSafe_1);
       } else {
-        boolean _equals_1 = Objects.equal(ext, ".htm");
-        if (_equals_1) {
-          Link _RICHTEXT = this.n.RICHTEXT(session);
-          Query _appendSafe_1 = toNode.appendSafe(_RICHTEXT);
-          res.add(_appendSafe_1);
+        boolean _equals_2 = Objects.equal(ext, ".js");
+        if (_equals_2) {
+          Link _JAVASCRIPT = this.n.JAVASCRIPT(session);
+          Query _appendSafe_2 = toNode.appendSafe(_JAVASCRIPT);
+          res.add(_appendSafe_2);
         } else {
-          boolean _equals_2 = Objects.equal(ext, ".js");
-          if (_equals_2) {
-            Link _JAVASCRIPT = this.n.JAVASCRIPT(session);
-            Query _appendSafe_2 = toNode.appendSafe(_JAVASCRIPT);
-            res.add(_appendSafe_2);
+          boolean _equals_3 = Objects.equal(ext, ".coffee");
+          if (_equals_3) {
+            Link _COFFEESCRIPT = this.n.COFFEESCRIPT(session);
+            Query _appendSafe_3 = toNode.appendSafe(_COFFEESCRIPT);
+            res.add(_appendSafe_3);
           } else {
-            boolean _equals_3 = Objects.equal(ext, ".coffee");
-            if (_equals_3) {
-              Link _COFFEESCRIPT = this.n.COFFEESCRIPT(session);
-              Query _appendSafe_3 = toNode.appendSafe(_COFFEESCRIPT);
-              res.add(_appendSafe_3);
+            boolean _equals_4 = Objects.equal(ext, ".css");
+            if (_equals_4) {
+              Link _CSS = this.n.CSS(session);
+              Query _appendSafe_4 = toNode.appendSafe(_CSS);
+              res.add(_appendSafe_4);
             } else {
-              boolean _equals_4 = Objects.equal(ext, ".css");
-              if (_equals_4) {
-                Link _CSS = this.n.CSS(session);
-                Query _appendSafe_4 = toNode.appendSafe(_CSS);
-                res.add(_appendSafe_4);
-              } else {
-                boolean _equals_5 = Objects.equal(ext, ".type");
-                if (_equals_5) {
-                  Link _ATTRIBUTE = this.n.ATTRIBUTE(session);
-                  Query _appendSafe_5 = toNode.appendSafe(_ATTRIBUTE);
-                  res.add(_appendSafe_5);
-                }
+              boolean _equals_5 = Objects.equal(ext, ".type");
+              if (_equals_5) {
+                Link _ATTRIBUTE = this.n.ATTRIBUTE(session);
+                Query _appendSafe_5 = toNode.appendSafe(_ATTRIBUTE);
+                res.add(_appendSafe_5);
               }
             }
           }
         }
       }
-      _xblockexpression = res;
     }
-    return _xblockexpression;
+    throw new RuntimeException("Not supported!");
   }
   
   public final static Object NO_VALUE = new Object();
   
-  public void getFileName(final Node forNode, final FileItem inFolder, final String fileExtension, final ValueCallback<String> cb) {
+  public Object getFileName(final Node forNode, final FileItem inFolder, final String fileExtension, final ValueCallback<String> cb) {
     final Closure<String> _function = new Closure<String>() {
       @Override
       public void apply(final String fileNameFromNode) {
@@ -199,12 +192,18 @@ public class ConvertUtils {
       }
     };
     ValueCallback<String> _embed = AsyncCommon.<String>embed(cb, _function);
-    this.getFileName(forNode, _embed);
+    return this.getFileName(forNode, _embed);
   }
   
-  public void getFileName(final Node fromNode, final ValueCallback<String> cb) {
+  public Object getFileName(final Node fromNode, final ValueCallback<String> cb) {
     throw new Error("Unresolved compilation problems:"
-      + "\nAmbiguous feature call.\nThe methods\n\tlink(Reference) in ClientOperations,\n\tlink(Link) in ClientOperations,\n\tlink(Node) in ClientOperations and\n\tlink(String) in ClientOperations\nall match.");
+      + "\nno viable alternative at input \'val\'"
+      + "\nThe method or field labelTypes is undefined for the type ConvertUtils"
+      + "\nThe method or field labelTypes is undefined for the type ConvertUtils"
+      + "\nAmbiguous feature call.\nThe methods\n\tlink(Reference) in ClientOperations,\n\tlink(Link) in ClientOperations,\n\tlink(Node) in ClientOperations and\n\tlink(String) in ClientOperations\nall match."
+      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
+      + "\nsize cannot be resolved"
+      + "\nforEach cannot be resolved");
   }
   
   public static String getNameFromUri(final String uri) {
