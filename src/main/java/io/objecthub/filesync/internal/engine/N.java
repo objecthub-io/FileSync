@@ -56,6 +56,14 @@ public class N {
     return N.getType(client, "attribute");
   }
   
+  public static String CLASS() {
+    return N.getTypeLink("class");
+  }
+  
+  public Link CLASS(final Client client) {
+    return N.getType(client, "class");
+  }
+  
   public static String RICHTEXT() {
     return "http://slicnet.com/mxrogm/mxrogm/data/stream/2014/3/28/n3";
   }

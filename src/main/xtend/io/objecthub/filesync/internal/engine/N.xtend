@@ -56,6 +56,14 @@ class N {
 		getType(client, 'attribute')
 	}
 	
+	def static CLASS() {
+		getTypeLink('class')
+	}
+	
+	def CLASS(Client client) {
+		getType(client, 'class')
+	}
+	
 	// TBD
 	def static RICHTEXT() {
 		"http://slicnet.com/mxrogm/mxrogm/data/stream/2014/3/28/n3"
