@@ -1,16 +1,19 @@
 package io.objecthub.filesync.internal.engine.convert;
 
 import com.appjangle.api.Node;
+import com.appjangle.api.Query;
 import de.mxro.file.FileItem;
 import delight.async.AsyncCommon;
 import delight.async.callbacks.ValueCallback;
 import delight.functional.Closure;
+import io.nextweb.promise.DataOperation;
 import io.objecthub.filesync.Converter;
 import io.objecthub.filesync.FileOperation;
 import io.objecthub.filesync.FileOperationContext;
 import io.objecthub.filesync.ItemMetadata;
 import io.objecthub.filesync.Metadata;
 import io.objecthub.filesync.NetworkOperation;
+import io.objecthub.filesync.NetworkOperationContext;
 import io.objecthub.filesync.internal.engine.FileUtils;
 import io.objecthub.filesync.internal.engine.N;
 import io.objecthub.filesync.internal.engine.convert.ConvertUtils;
@@ -35,9 +38,53 @@ public class FolderToNode implements Converter {
   
   @Override
   public void createNodes(final Metadata metadata, final FileItem source, final ValueCallback<List<NetworkOperation>> cb) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method LABEL is undefined for the type FolderToNode"
-      + "\nThe method ICON is undefined for the type FolderToNode");
+    String _name = source.getName();
+    final String simpleName = this.futils.getSimpleName(_name);
+    final LinkedList<NetworkOperation> ops = new LinkedList<NetworkOperation>();
+    final NetworkOperation _function = new NetworkOperation() {
+      @Override
+      public void apply(final NetworkOperationContext ctx, final ValueCallback<List<DataOperation<?>>> opscb) {
+        Node _parent = ctx.parent();
+        String _name = source.getName();
+        final Query baseNode = _parent.appendSafe(_name, ("./" + simpleName));
+        metadata.add(
+          new ItemMetadata() {
+            @Override
+            public String name() {
+              return source.getName();
+            }
+            
+            @Override
+            public Date lastModified() {
+              return source.lastModified();
+            }
+            
+            @Override
+            public String uri() {
+              Node _parent = ctx.parent();
+              String _uri = _parent.uri();
+              String _plus = (_uri + "/");
+              return (_plus + simpleName);
+            }
+            
+            @Override
+            public String hash() {
+              int _hashCode = simpleName.hashCode();
+              return Integer.valueOf(_hashCode).toString();
+            }
+            
+            @Override
+            public String converter() {
+              Class<? extends FolderToNode> _class = FolderToNode.this.getClass();
+              return _class.toString();
+            }
+          });
+        ArrayList<DataOperation<?>> _newArrayList = CollectionLiterals.<DataOperation<?>>newArrayList(baseNode);
+        opscb.onSuccess(_newArrayList);
+      }
+    };
+    ops.add(_function);
+    cb.onSuccess(ops);
   }
   
   @Override

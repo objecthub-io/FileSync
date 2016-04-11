@@ -60,10 +60,10 @@ class FolderToNode implements Converter {
 					})
 				opscb.onSuccess(
 					newArrayList(
-						baseNode,
-						baseNode.appendSafe(source.name, "./.label").appendSafe(baseNode.client.LABEL),
-						baseNode.appendSafe("https://appjangle.com/files/img/20141020/List.png", "./.icon").
-							appendSafe(baseNode.client().ICON)
+						baseNode
+						//baseNode.appendSafe(source.name, "./.label").appendSafe(baseNode.client.LABEL),
+						//baseNode.appendSafe("https://appjangle.com/files/img/20141020/List.png", "./.icon").
+						//	appendSafe(baseNode.client().ICON)
 					))
 			])
 
