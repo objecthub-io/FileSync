@@ -2,7 +2,7 @@
 	<groupId>com.appjangle.filesync</groupId>
 	<artifactId>FileSync-OH</artifactId>
 	<version>0.0.3-SNAPSHOT</version>
-	<description>Desktop application to synchronize Files with Appjangle Data.
+	<description>Desktop application to synchronize Files with ObjectHub Data.
 	</description>
 
 	<properties>
