@@ -46,19 +46,19 @@ class N {
 	
 	
 	def static COFFEESCRIPT() {
-		getTypeLink('coffeescript')
+		getTypeLink('plain-cs')
 	}
 	
-	def COFFEESCRIPT(Client session) {
-		getType('coffeescript')
+	def COFFEESCRIPT(Client client) {
+		getType(client, 'plain-cs')
 	}
 	
 	def static JAVASCRIPT() {
-		"https://u1.linnk.it/qc8sbw/usr/apps/textsync/upload/java-script-document"
+		getTypeLink('javascript')
 	}
 	
-	def JAVASCRIPT(Client session) {
-		session.link(JAVASCRIPT)
+	def JAVASCRIPT(Client client) {
+		getType(client, 'javascript')
 	}
 	
 	def static CSS() {

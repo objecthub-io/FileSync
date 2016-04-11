@@ -42,22 +42,19 @@ public class N {
   }
   
   public static String COFFEESCRIPT() {
-    return N.getTypeLink("coffeescript");
+    return N.getTypeLink("plain-cs");
   }
   
-  public Link COFFEESCRIPT(final Client session) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe static method getType(Client, String) should be accessed in a static way"
-      + "\nType mismatch: cannot convert from String to Client");
+  public Link COFFEESCRIPT(final Client client) {
+    return N.getType(client, "plain-cs");
   }
   
   public static String JAVASCRIPT() {
-    return "https://u1.linnk.it/qc8sbw/usr/apps/textsync/upload/java-script-document";
+    return N.getTypeLink("javascript");
   }
   
-  public Link JAVASCRIPT(final Client session) {
-    String _JAVASCRIPT = N.JAVASCRIPT();
-    return session.link(_JAVASCRIPT);
+  public Link JAVASCRIPT(final Client client) {
+    return N.getType(client, "javascript");
   }
   
   public static String CSS() {
