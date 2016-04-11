@@ -58,12 +58,11 @@ public class N {
   }
   
   public static String CSS() {
-    return "https://u1.linnk.it/qc8sbw/usr/apps/textsync/upload/CSSDocument";
+    return N.getTypeLink("css");
   }
   
-  public Link CSS(final Client session) {
-    String _CSS = N.CSS();
-    return session.link(_CSS);
+  public Link CSS(final Client client) {
+    return N.getType(client, "css");
   }
   
   public static String TYPE() {

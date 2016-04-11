@@ -62,11 +62,11 @@ class N {
 	}
 	
 	def static CSS() {
-		"https://u1.linnk.it/qc8sbw/usr/apps/textsync/upload/CSSDocument"
+		getTypeLink('css')
 	}
 	
-	def  CSS(Client session) {
-		session.link(CSS)
+	def CSS(Client client) {
+		getType(client, 'css')
 	}
 	
 	def static TYPE() {
