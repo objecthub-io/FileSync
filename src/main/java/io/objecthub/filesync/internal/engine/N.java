@@ -5,6 +5,17 @@ import com.appjangle.api.Link;
 
 @SuppressWarnings("all")
 public class N {
+  private final static String ID = "100";
+  
+  public static String getTypeLink(final String type) {
+    return (((("https://beta.objecthub.io/dev/~" + N.ID) + "/~hub/hub/repo/~objects/~") + type) + "/versions/~*0.node.html");
+  }
+  
+  public static Link getType(final Client client, final String type) {
+    String _typeLink = N.getTypeLink(type);
+    return client.link(_typeLink);
+  }
+  
   public static String HTML_VALUE() {
     return "https://admin1.linnk.it/types/v01/isHtmlValue";
   }
