@@ -8,7 +8,7 @@ class N {
 	static val ID = "100"
 	
 	def static String getTypeLink(String type) {
-		"https://beta.objecthub.io/dev/~"+ID+"/~hub/hub/repo/~objects/~"+type+"/versions/~*0.node.html"	
+		"https://beta.objecthub.io/dev/~"+ID+"/~hub/hub/repo/~objects/~"+type+"/versions/~*0"	
 	}
 	
 	def static Link getType(Client client, String type) {
