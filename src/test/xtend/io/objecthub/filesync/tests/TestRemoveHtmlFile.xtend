@@ -8,6 +8,7 @@ import delight.functional.Success
 @JUnit
 class TestRemoveHtmlFile extends CheckUpdatesTemplate {
 	
+	
 	override protected step1_defineData() {
 		val file1 = source.append("<p>file1</p>", "./file1")
 		file1.append("html1", "./label").append(session.LABEL)

@@ -3,4 +3,4 @@
  * @author <a href="http://www.mxro.de">Max Rohde</a>
  *
  */
-package com.appjangle.filesync.tests;
+package io.objecthub.filesync.tests;
