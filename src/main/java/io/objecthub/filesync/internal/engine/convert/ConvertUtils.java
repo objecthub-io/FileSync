@@ -45,7 +45,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 public class ConvertUtils {
   private final List<String> labelTypes = Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(N.LABEL(), N.LABEL2(), N.LABEL3()));
   
-  private final Map<String, String> textValueExtensions = Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(Pair.<String, String>of(N.HTML_VALUE(), ".html"), Pair.<String, String>of(N.TYPE(), ".type"), Pair.<String, String>of(N.CSS(), ".css"), Pair.<String, String>of(N.JAVASCRIPT(), ".js"), Pair.<String, String>of(N.COFFEESCRIPT(), ".coffee"), Pair.<String, String>of(N.RICHTEXT(), ".htm")));
+  private final Map<String, String> textValueExtensions = Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(Pair.<String, String>of(N.HTML_VALUE(), ".html"), Pair.<String, String>of(N.ATTRIBUTE(), ".type"), Pair.<String, String>of(N.CSS(), ".css"), Pair.<String, String>of(N.JAVASCRIPT(), ".js"), Pair.<String, String>of(N.COFFEESCRIPT(), ".coffee"), Pair.<String, String>of(N.RICHTEXT(), ".htm")));
   
   public boolean isTextValue(final String fileName) {
     boolean _xblockexpression = false;
@@ -173,8 +173,8 @@ public class ConvertUtils {
               } else {
                 boolean _equals_5 = Objects.equal(ext, ".type");
                 if (_equals_5) {
-                  Link _TYPE = this.n.TYPE(session);
-                  Query _appendSafe_5 = toNode.appendSafe(_TYPE);
+                  Link _ATTRIBUTE = this.n.ATTRIBUTE(session);
+                  Query _appendSafe_5 = toNode.appendSafe(_ATTRIBUTE);
                   res.add(_appendSafe_5);
                 }
               }

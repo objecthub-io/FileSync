@@ -33,9 +33,9 @@ class TestCreateVariousNodeTypes extends CheckFilesToNodesTemplate {
 		
 		result.select(session.COFFEESCRIPT).get.value() => equalTo("window.alert 'nothing much'")
 		
-		result.selectAll(session.TYPE).get.size => equalTo(1)
+		result.selectAll(session.ATTRIBUTE).get.size => equalTo(1)
 		
-		result.select(session.TYPE).get.value() => equalTo("Something for my type")
+		result.select(session.ATTRIBUTE).get.value() => equalTo("Something for my type")
 		
 	}
 	

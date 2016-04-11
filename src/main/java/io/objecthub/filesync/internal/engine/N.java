@@ -65,13 +65,12 @@ public class N {
     return N.getType(client, "css");
   }
   
-  public static String TYPE() {
-    return "http://slicnet.com/mxrogm/mxrogm/data/stream/2013/12/11/n5";
+  public static String ATTRIBUTE() {
+    return N.getTypeLink("attribute");
   }
   
-  public Link TYPE(final Client session) {
-    String _TYPE = N.TYPE();
-    return session.link(_TYPE);
+  public Link ATTRIBUTE(final Client client) {
+    return N.getType(client, "attribute");
   }
   
   public static String RICHTEXT() {

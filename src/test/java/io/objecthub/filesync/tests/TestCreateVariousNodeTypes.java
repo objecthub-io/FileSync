@@ -75,14 +75,14 @@ public class TestCreateVariousNodeTypes extends CheckFilesToNodesTemplate {
     Object _value_2 = _get_5.value();
     Matcher<Object> _equalTo_5 = TestCreateVariousNodeTypes.<Object>equalTo("window.alert \'nothing much\'");
     this.<Object>operator_doubleArrow(_value_2, _equalTo_5);
-    Link _TYPE = this.n.TYPE(this.session);
-    ListQuery _selectAll_3 = this.result.selectAll(_TYPE);
+    Link _ATTRIBUTE = this.n.ATTRIBUTE(this.session);
+    ListQuery _selectAll_3 = this.result.selectAll(_ATTRIBUTE);
     NodeList _get_6 = _selectAll_3.get();
     int _size_3 = _get_6.size();
     Matcher<Integer> _equalTo_6 = TestCreateVariousNodeTypes.<Integer>equalTo(Integer.valueOf(1));
     this.<Integer>operator_doubleArrow(Integer.valueOf(_size_3), _equalTo_6);
-    Link _TYPE_1 = this.n.TYPE(this.session);
-    Query _select_3 = this.result.select(_TYPE_1);
+    Link _ATTRIBUTE_1 = this.n.ATTRIBUTE(this.session);
+    Query _select_3 = this.result.select(_ATTRIBUTE_1);
     Node _get_7 = _select_3.get();
     Object _value_3 = _get_7.value();
     Matcher<Object> _equalTo_7 = TestCreateVariousNodeTypes.<Object>equalTo("Something for my type");

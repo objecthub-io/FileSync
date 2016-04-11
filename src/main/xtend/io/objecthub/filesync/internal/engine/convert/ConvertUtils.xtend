@@ -27,7 +27,7 @@ class ConvertUtils {
 
 	val textValueExtensions = #{
 		N.HTML_VALUE -> '.html',
-		N.TYPE -> '.type',
+		N.ATTRIBUTE -> '.type',
 		N.CSS -> '.css',
 		N.JAVASCRIPT -> '.js',
 		N.COFFEESCRIPT -> '.coffee',
@@ -146,7 +146,7 @@ class ConvertUtils {
 			
 		} else if (ext == ".type") {
 			
-			res.add(toNode.appendSafe(session.TYPE))
+			res.add(toNode.appendSafe(session.ATTRIBUTE))
 			
 			
 			

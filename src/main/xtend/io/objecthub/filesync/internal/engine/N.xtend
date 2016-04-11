@@ -69,14 +69,15 @@ class N {
 		getType(client, 'css')
 	}
 	
-	def static TYPE() {
-		"http://slicnet.com/mxrogm/mxrogm/data/stream/2013/12/11/n5"
+	def static ATTRIBUTE() {
+		getTypeLink('attribute')
 	}
 	
-	def TYPE(Client session) {
-		session.link(TYPE)
+	def ATTRIBUTE(Client client) {
+		getType(client, 'attribute')
 	}
 	
+	// TBD
 	def static RICHTEXT() {
 		"http://slicnet.com/mxrogm/mxrogm/data/stream/2014/3/28/n3"
 	}
