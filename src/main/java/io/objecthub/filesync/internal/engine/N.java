@@ -17,20 +17,11 @@ public class N {
   }
   
   public static String HTML_VALUE() {
-    return "https://admin1.linnk.it/types/v01/isHtmlValue";
+    return N.getTypeLink("html");
   }
   
-  public Link HTML_VALUE(final Client session) {
-    return session.link("https://admin1.linnk.it/types/v01/isHtmlValue");
-  }
-  
-  public static String TEMPLATE() {
-    return "https://u1.linnk.it/6wbnoq/Types/aTemplate";
-  }
-  
-  public Link TEMPLATE(final Client session) {
-    String _TEMPLATE = N.TEMPLATE();
-    return session.link(_TEMPLATE);
+  public Link HTML_VALUE(final Client client) {
+    return N.getType(client, "html");
   }
   
   public static String TEXT_VALUE() {

@@ -16,20 +16,14 @@ class N {
 	}
 	
 	def static HTML_VALUE() {
-		"https://admin1.linnk.it/types/v01/isHtmlValue"
+		getTypeLink('html')
 	}
 	
-	def  HTML_VALUE(Client session) {
-		session.link("https://admin1.linnk.it/types/v01/isHtmlValue")
+	def  HTML_VALUE(Client client) {
+		getType(client, 'html')
 	}
 	
-	def static TEMPLATE() {
-		"https://u1.linnk.it/6wbnoq/Types/aTemplate"
-	}
 	
-	def TEMPLATE(Client session) {
-		 session.link(TEMPLATE)
-	}
 	
 	def static TEXT_VALUE() {
 		"https://u1.linnk.it/6wbnoq/Types/aTextValue"

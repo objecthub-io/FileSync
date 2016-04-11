@@ -146,95 +146,77 @@ public class ConvertUtils {
         Link _HTML_VALUE = this.n.HTML_VALUE(session);
         Query _appendSafe = toNode.appendSafe(_HTML_VALUE);
         res.add(_appendSafe);
-        Link _TEMPLATE = this.n.TEMPLATE(session);
-        Query _appendSafe_1 = toNode.appendSafe(_TEMPLATE);
-        res.add(_appendSafe_1);
         final Query icon = toNode.appendSafe("https://appjangle.com/files/img/20141029/HTML.png", "./.icon");
         res.add(icon);
         Link _ICON = this.n.ICON(session);
-        Query _appendSafe_2 = icon.appendSafe(_ICON);
-        res.add(_appendSafe_2);
+        Query _appendSafe_1 = icon.appendSafe(_ICON);
+        res.add(_appendSafe_1);
       } else {
         boolean _equals_1 = Objects.equal(ext, ".htm");
         if (_equals_1) {
           Link _RICHTEXT = this.n.RICHTEXT(session);
-          Query _appendSafe_3 = toNode.appendSafe(_RICHTEXT);
-          res.add(_appendSafe_3);
-          Link _TEMPLATE_1 = this.n.TEMPLATE(session);
-          Query _appendSafe_4 = toNode.appendSafe(_TEMPLATE_1);
-          res.add(_appendSafe_4);
+          Query _appendSafe_2 = toNode.appendSafe(_RICHTEXT);
+          res.add(_appendSafe_2);
           final Query icon_1 = toNode.appendSafe("https://appjangle.com/files/img/20141119/RTF.png", "./.icon");
           res.add(icon_1);
           Link _ICON_1 = this.n.ICON(session);
-          Query _appendSafe_5 = icon_1.appendSafe(_ICON_1);
-          res.add(_appendSafe_5);
+          Query _appendSafe_3 = icon_1.appendSafe(_ICON_1);
+          res.add(_appendSafe_3);
         } else {
           boolean _equals_2 = Objects.equal(ext, ".js");
           if (_equals_2) {
             Link _JAVASCRIPT = this.n.JAVASCRIPT(session);
-            Query _appendSafe_6 = toNode.appendSafe(_JAVASCRIPT);
-            res.add(_appendSafe_6);
-            Link _TEMPLATE_2 = this.n.TEMPLATE(session);
-            Query _appendSafe_7 = toNode.appendSafe(_TEMPLATE_2);
-            res.add(_appendSafe_7);
+            Query _appendSafe_4 = toNode.appendSafe(_JAVASCRIPT);
+            res.add(_appendSafe_4);
             final Query icon_2 = toNode.appendSafe("https://appjangle.com/files/img/20141029/JavaScript.png", "./.icon");
             res.add(icon_2);
             Link _ICON_2 = this.n.ICON(session);
-            Query _appendSafe_8 = icon_2.appendSafe(_ICON_2);
-            res.add(_appendSafe_8);
+            Query _appendSafe_5 = icon_2.appendSafe(_ICON_2);
+            res.add(_appendSafe_5);
           } else {
             boolean _equals_3 = Objects.equal(ext, ".coffee");
             if (_equals_3) {
               Link _COFFEESCRIPT = this.n.COFFEESCRIPT(session);
-              Query _appendSafe_9 = toNode.appendSafe(_COFFEESCRIPT);
-              res.add(_appendSafe_9);
-              Link _TEMPLATE_3 = this.n.TEMPLATE(session);
-              Query _appendSafe_10 = toNode.appendSafe(_TEMPLATE_3);
-              res.add(_appendSafe_10);
+              Query _appendSafe_6 = toNode.appendSafe(_COFFEESCRIPT);
+              res.add(_appendSafe_6);
               final Query icon_3 = toNode.appendSafe("https://appjangle.com/files/img/20141118/Coffeescript.png", "./.icon");
               res.add(icon_3);
               Link _ICON_3 = this.n.ICON(session);
-              Query _appendSafe_11 = icon_3.appendSafe(_ICON_3);
-              res.add(_appendSafe_11);
+              Query _appendSafe_7 = icon_3.appendSafe(_ICON_3);
+              res.add(_appendSafe_7);
             } else {
               boolean _equals_4 = Objects.equal(ext, ".css");
               if (_equals_4) {
                 Link _CSS = this.n.CSS(session);
-                Query _appendSafe_12 = toNode.appendSafe(_CSS);
-                res.add(_appendSafe_12);
-                Link _TEMPLATE_4 = this.n.TEMPLATE(session);
-                Query _appendSafe_13 = toNode.appendSafe(_TEMPLATE_4);
-                res.add(_appendSafe_13);
+                Query _appendSafe_8 = toNode.appendSafe(_CSS);
+                res.add(_appendSafe_8);
                 final Query icon_4 = toNode.appendSafe("https://appjangle.com/files/img/20141118/CSS.png", "./.icon");
                 res.add(icon_4);
                 Link _ICON_4 = this.n.ICON(session);
-                Query _appendSafe_14 = icon_4.appendSafe(_ICON_4);
-                res.add(_appendSafe_14);
+                Query _appendSafe_9 = icon_4.appendSafe(_ICON_4);
+                res.add(_appendSafe_9);
               } else {
                 boolean _equals_5 = Objects.equal(ext, ".type");
                 if (_equals_5) {
                   Link _TYPE = this.n.TYPE(session);
-                  Query _appendSafe_15 = toNode.appendSafe(_TYPE);
-                  res.add(_appendSafe_15);
+                  Query _appendSafe_10 = toNode.appendSafe(_TYPE);
+                  res.add(_appendSafe_10);
                   final Query icon_5 = toNode.appendSafe("https://appjangle.com/files/img/20141118/Type.png", "./.icon");
                   res.add(icon_5);
                   Link _ICON_5 = this.n.ICON(session);
-                  Query _appendSafe_16 = icon_5.appendSafe(_ICON_5);
-                  res.add(_appendSafe_16);
+                  Query _appendSafe_11 = icon_5.appendSafe(_ICON_5);
+                  res.add(_appendSafe_11);
                   final Query description = toNode.appendSafe("");
                   res.add(description);
                   Link _link = session.link("http://slicnet.com/mxrogm/mxrogm/data/stream/2013/12/11/n9");
-                  Query _appendSafe_17 = description.appendSafe(_link);
-                  res.add(_appendSafe_17);
+                  Query _appendSafe_12 = description.appendSafe(_link);
+                  res.add(_appendSafe_12);
                 }
               }
             }
           }
         }
       }
-      Link _TEXT_VALUE = this.n.TEXT_VALUE(session);
-      Query _appendSafe_18 = toNode.appendSafe(_TEXT_VALUE);
-      res.add(_appendSafe_18);
       _xblockexpression = res;
     }
     return _xblockexpression;

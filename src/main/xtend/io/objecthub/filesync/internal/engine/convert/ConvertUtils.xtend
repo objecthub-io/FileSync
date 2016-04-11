@@ -111,7 +111,7 @@ class ConvertUtils {
 		if (ext == ".html") {
 			
 			res.add(toNode.appendSafe(session.HTML_VALUE))
-			res.add(toNode.appendSafe(session.TEMPLATE))
+			
 			
 			val icon = toNode.appendSafe("https://appjangle.com/files/img/20141029/HTML.png", "./.icon")
 			res.add(icon)
@@ -119,7 +119,7 @@ class ConvertUtils {
 				
 		} else if (ext == ".htm") {
 			res.add(toNode.appendSafe(session.RICHTEXT))
-			res.add(toNode.appendSafe(session.TEMPLATE))
+			
 			
 			val icon = toNode.appendSafe("https://appjangle.com/files/img/20141119/RTF.png", "./.icon")
 			res.add(icon)
@@ -129,7 +129,7 @@ class ConvertUtils {
 			
 			
 			res.add(toNode.appendSafe(session.JAVASCRIPT))
-			res.add(toNode.appendSafe(session.TEMPLATE))
+			
 			
 			val icon = toNode.appendSafe("https://appjangle.com/files/img/20141029/JavaScript.png", "./.icon");
 			res.add(icon)
@@ -138,7 +138,7 @@ class ConvertUtils {
 		} else if (ext == ".coffee") {
 			
 			res.add(toNode.appendSafe(session.COFFEESCRIPT))
-			res.add(toNode.appendSafe(session.TEMPLATE))
+			
 			
 			val icon = toNode.appendSafe("https://appjangle.com/files/img/20141118/Coffeescript.png", "./.icon");
 			
@@ -149,7 +149,7 @@ class ConvertUtils {
 			
 			res.add(toNode.appendSafe(session.CSS))
 			
-			res.add(toNode.appendSafe(session.TEMPLATE))
+			
 			
 			val icon = toNode.appendSafe("https://appjangle.com/files/img/20141118/CSS.png", "./.icon")
 			
@@ -173,7 +173,7 @@ class ConvertUtils {
 			
 		}
 		
-		res.add(toNode.appendSafe(session.TEXT_VALUE))
+		
 		
 	 	res
 		
