@@ -20,6 +20,8 @@ import io.nextweb.promise.callbacks.DataCallback;
 import io.nextweb.promise.exceptions.DataExceptionManager;
 import io.nextweb.promise.exceptions.ExceptionListener;
 import io.nextweb.promise.exceptions.ExceptionResult;
+import io.nextweb.promise.exceptions.UndefinedListener;
+import io.nextweb.promise.exceptions.UndefinedResult;
 import io.nextweb.promise.utils.CallbackUtils;
 import io.objecthub.filesync.ItemMetadata;
 import io.objecthub.filesync.Metadata;
@@ -176,7 +178,7 @@ public class ConvertUtils {
   
   public final static Object NO_VALUE = new Object();
   
-  public Object getFileName(final Node forNode, final FileItem inFolder, final String fileExtension, final ValueCallback<String> cb) {
+  public void getFileName(final Node forNode, final FileItem inFolder, final String fileExtension, final ValueCallback<String> cb) {
     final Closure<String> _function = new Closure<String>() {
       @Override
       public void apply(final String fileNameFromNode) {
@@ -192,18 +194,30 @@ public class ConvertUtils {
       }
     };
     ValueCallback<String> _embed = AsyncCommon.<String>embed(cb, _function);
-    return this.getFileName(forNode, _embed);
+    this.getFileName(forNode, _embed);
   }
   
-  public Object getFileName(final Node fromNode, final ValueCallback<String> cb) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nno viable alternative at input \'val\'"
-      + "\nThe method or field labelTypes is undefined for the type ConvertUtils"
-      + "\nThe method or field labelTypes is undefined for the type ConvertUtils"
-      + "\nAmbiguous feature call.\nThe methods\n\tlink(Reference) in ClientOperations,\n\tlink(Link) in ClientOperations,\n\tlink(Node) in ClientOperations and\n\tlink(String) in ClientOperations\nall match."
-      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
-      + "\nsize cannot be resolved"
-      + "\nforEach cannot be resolved");
+  public void getFileName(final Node fromNode, final ValueCallback<String> cb) {
+    final Query qry = fromNode.select("./.meta/title");
+    ExceptionListener _asExceptionListener = CallbackUtils.<String>asExceptionListener(cb);
+    qry.catchExceptions(_asExceptionListener);
+    final UndefinedListener _function = new UndefinedListener() {
+      @Override
+      public void onUndefined(final UndefinedResult it) {
+        String _uri = fromNode.uri();
+        String _nameFromUri = ConvertUtils.getNameFromUri(_uri);
+        cb.onSuccess(_nameFromUri);
+      }
+    };
+    qry.catchUndefined(_function);
+    final Closure<Node> _function_1 = new Closure<Node>() {
+      @Override
+      public void apply(final Node title) {
+        String _value = title.<String>value(String.class);
+        cb.onSuccess(_value);
+      }
+    };
+    qry.get(_function_1);
   }
   
   public static String getNameFromUri(final String uri) {

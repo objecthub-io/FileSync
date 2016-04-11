@@ -182,32 +182,19 @@ class ConvertUtils {
 
 	def getFileName(Node fromNode, ValueCallback<String> cb) {
 
-		fromNode.
+		val qry = fromNode.select('./.meta/title')
 
+		qry.catchExceptions(CallbackUtils.asExceptionListener(cb))
 
-		val cbs = AsyncCommon.collect(labelTypes.size,
-			cb.embed(
-				[ res |
-					for (item : res) {
-						if (item instanceof String) {
-							cb.onSuccess(item)
-							return
-						}
-
-					}
-					// when no label defined
-					cb.onSuccess(getNameFromUri(fromNode.uri()))
-				]));
-
-		labelTypes.forEach [ labelType |
-			val qry = fromNode.select(fromNode.client().link(labelType))
-			val itmcb = cbs.createCallback
-			qry.catchUndefined([itmcb.onSuccess(ConvertUtils.NO_VALUE)])
-			qry.catchExceptions([er|itmcb.onFailure(er.exception)])
-			qry.get [ label |
-				itmcb.onSuccess(label.value())
-			]
+		qry.catchUndefined [
+			cb.onSuccess(getNameFromUri(fromNode.uri()))
 		]
+		
+		qry.get [ title |
+			cb.onSuccess(title.value(String))
+		]
+
+		
 
 	}
 
