@@ -90,7 +90,7 @@ class FolderToNode implements Converter {
 					[ ctx |
 						
 						
-						val folderName = rawFolderName.toFileSystemSafeName(false, 100)
+						val folderName = rawFolderName.toFileSystemSafeName(false, 50)
 						ctx.folder.assertFolder(folderName)
 						
 						

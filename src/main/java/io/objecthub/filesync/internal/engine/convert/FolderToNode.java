@@ -107,7 +107,7 @@ public class FolderToNode implements Converter {
         final FileOperation _function = new FileOperation() {
           @Override
           public void apply(final FileOperationContext ctx) {
-            final String folderName = FolderToNode.this.futils.toFileSystemSafeName(rawFolderName, false, 100);
+            final String folderName = FolderToNode.this.futils.toFileSystemSafeName(rawFolderName, false, 50);
             FileItem _folder = ctx.folder();
             _folder.assertFolder(folderName);
             Metadata _metadata = ctx.metadata();
