@@ -1,6 +1,6 @@
-package com.appjangle.filesync.tests.utils
+package io.objecthub.filesync.tests.utils
 
-import com.appjangle.filesync.internal.engine.convert.ConvertUtils
+import io.objecthub.filesync.internal.engine.convert.ConvertUtils
 import org.junit.Assert
 import org.junit.Test
 

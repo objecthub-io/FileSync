@@ -1,4 +1,4 @@
-package com.appjangle.filesync.tests
+package io.objecthub.filesync.tests
 
 import de.oehme.xtend.junit.JUnit
 

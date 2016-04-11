@@ -1,6 +1,6 @@
-package com.appjangle.filesync.tests
+package io.objecthub.filesync.tests
 
-import com.appjangle.filesync.internal.engine.N
+import io.objecthub.filesync.internal.engine.N
 import de.oehme.xtend.junit.Hamcrest
 import de.oehme.xtend.junit.JUnit
 

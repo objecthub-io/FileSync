@@ -1,6 +1,6 @@
-package com.appjangle.filesync.tests
+package io.objecthub.filesync.tests
 
-import com.appjangle.filesync.FileSync
+import io.objecthub.filesync.FileSync
 import delight.async.jre.Async
 import org.junit.Test
 

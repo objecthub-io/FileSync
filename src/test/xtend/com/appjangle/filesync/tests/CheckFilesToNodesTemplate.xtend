@@ -1,10 +1,10 @@
-package com.appjangle.filesync.tests
+package io.objecthub.filesync.tests
 
 import com.appjangle.api.Client
 import com.appjangle.api.Node
 import com.appjangle.api.common.LocalServer
 import com.appjangle.api.servers.jre.Servers
-import com.appjangle.filesync.FileSync
+import io.objecthub.filesync.FileSync
 import com.appjangle.jre.Clients
 import de.mxro.file.FileItem
 import de.mxro.file.Jre.FilesJre
