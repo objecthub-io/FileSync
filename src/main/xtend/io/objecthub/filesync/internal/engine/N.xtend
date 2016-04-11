@@ -1,8 +1,19 @@
 package io.objecthub.filesync.internal.engine
 
 import com.appjangle.api.Client
+import com.appjangle.api.Link
 
 class N {
+	
+	static val ID = "100"
+	
+	def static String getTypeLink(String type) {
+		"https://beta.objecthub.io/dev/~"+ID+"/~hub/hub/repo/~objects/~"+type+"/versions/~*0.node.html"	
+	}
+	
+	def static Link getType(Client client, String type) {
+		client.link(getTypeLink(type))
+	}
 	
 	def static HTML_VALUE() {
 		"https://admin1.linnk.it/types/v01/isHtmlValue"
