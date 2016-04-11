@@ -113,17 +113,13 @@ class ConvertUtils {
 			res.add(toNode.appendSafe(session.HTML_VALUE))
 			
 			
-			val icon = toNode.appendSafe("https://appjangle.com/files/img/20141029/HTML.png", "./.icon")
-			res.add(icon)
-			res.add(icon.appendSafe(session.ICON))
+			
 				
 		} else if (ext == ".htm") {
 			res.add(toNode.appendSafe(session.RICHTEXT))
 			
 			
-			val icon = toNode.appendSafe("https://appjangle.com/files/img/20141119/RTF.png", "./.icon")
-			res.add(icon)
-			res.add(icon.appendSafe(session.ICON))
+		
 			
 		} else if (ext == ".js") {
 			
@@ -131,19 +127,14 @@ class ConvertUtils {
 			res.add(toNode.appendSafe(session.JAVASCRIPT))
 			
 			
-			val icon = toNode.appendSafe("https://appjangle.com/files/img/20141029/JavaScript.png", "./.icon");
-			res.add(icon)
-			res.add(icon.appendSafe(session.ICON))
+			
 			
 		} else if (ext == ".coffee") {
 			
 			res.add(toNode.appendSafe(session.COFFEESCRIPT))
 			
 			
-			val icon = toNode.appendSafe("https://appjangle.com/files/img/20141118/Coffeescript.png", "./.icon");
 			
-			res.add(icon)
-			res.add(icon.appendSafe(session.ICON))
 			
 		} else if (ext == ".css") {
 			
@@ -151,25 +142,13 @@ class ConvertUtils {
 			
 			
 			
-			val icon = toNode.appendSafe("https://appjangle.com/files/img/20141118/CSS.png", "./.icon")
 			
-			res.add(icon)
-			
-			res.add(icon.appendSafe(session.ICON))
 			
 		} else if (ext == ".type") {
 			
 			res.add(toNode.appendSafe(session.TYPE))
 			
-			val icon = toNode.appendSafe("https://appjangle.com/files/img/20141118/Type.png", "./.icon")
 			
-			res.add(icon)
-			res.add(icon.appendSafe(session.ICON))
-			
-			val description = toNode.appendSafe("")
-			
-			res.add(description)
-			res.add(description.appendSafe(session.link("http://slicnet.com/mxrogm/mxrogm/data/stream/2013/12/11/n9")))
 			
 		}
 		

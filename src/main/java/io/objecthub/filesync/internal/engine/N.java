@@ -24,15 +24,6 @@ public class N {
     return N.getType(client, "html");
   }
   
-  public static String TEXT_VALUE() {
-    return "https://u1.linnk.it/6wbnoq/Types/aTextValue";
-  }
-  
-  public Link TEXT_VALUE(final Client session) {
-    String _TEXT_VALUE = N.TEXT_VALUE();
-    return session.link(_TEXT_VALUE);
-  }
-  
   public static String LABEL() {
     return "https://u1.linnk.it/qc8sbw/usr/apps/textsync/files/shortLabel";
   }
