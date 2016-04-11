@@ -43,20 +43,14 @@ class N {
 		"https://u1.linnk.it/qc8sbw/usr/apps/textsync/files/longLabel"
 	}
 	
-	def static ICON() {
-		"https://u1.linnk.it/qc8sbw/usr/apps/textsync/files/icon32"
-	}
 	
-	def ICON(Client session) {
-		 session.link(ICON)
-	}
 	
 	def static COFFEESCRIPT() {
-		"http://slicnet.com/mxrogm/mxrogm/data/stream/2014/1/10/n3"
+		getTypeLink('coffeescript')
 	}
 	
 	def COFFEESCRIPT(Client session) {
-		session.link(COFFEESCRIPT)
+		getType('coffeescript')
 	}
 	
 	def static JAVASCRIPT() {

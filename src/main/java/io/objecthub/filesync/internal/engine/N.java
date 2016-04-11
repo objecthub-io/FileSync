@@ -41,22 +41,14 @@ public class N {
     return "https://u1.linnk.it/qc8sbw/usr/apps/textsync/files/longLabel";
   }
   
-  public static String ICON() {
-    return "https://u1.linnk.it/qc8sbw/usr/apps/textsync/files/icon32";
-  }
-  
-  public Link ICON(final Client session) {
-    String _ICON = N.ICON();
-    return session.link(_ICON);
-  }
-  
   public static String COFFEESCRIPT() {
-    return "http://slicnet.com/mxrogm/mxrogm/data/stream/2014/1/10/n3";
+    return N.getTypeLink("coffeescript");
   }
   
   public Link COFFEESCRIPT(final Client session) {
-    String _COFFEESCRIPT = N.COFFEESCRIPT();
-    return session.link(_COFFEESCRIPT);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe static method getType(Client, String) should be accessed in a static way"
+      + "\nType mismatch: cannot convert from String to Client");
   }
   
   public static String JAVASCRIPT() {
