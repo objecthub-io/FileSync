@@ -1,5 +1,6 @@
 package io.objecthub.filesync.internal.engine;
 
+import com.appjangle.api.Client;
 import com.appjangle.api.Link;
 import com.appjangle.api.LinkList;
 import com.appjangle.api.LinkListQuery;
@@ -12,13 +13,16 @@ import delight.async.callbacks.ValueCallback;
 import delight.async.helper.Aggregator;
 import delight.functional.Closure;
 import delight.functional.Closure2;
+import delight.functional.Success;
 import delight.functional.collections.CollectionsUtils;
+import io.nextweb.promise.DataPromise;
 import io.nextweb.promise.exceptions.ExceptionListener;
 import io.nextweb.promise.exceptions.ExceptionResult;
 import io.nextweb.promise.exceptions.UnauthorizedListener;
 import io.nextweb.promise.exceptions.UnauthorizedResult;
 import io.nextweb.promise.exceptions.UndefinedListener;
 import io.nextweb.promise.exceptions.UndefinedResult;
+import io.nextweb.promise.utils.CallbackUtils;
 import io.objecthub.filesync.Converter;
 import io.objecthub.filesync.FileOperation;
 import io.objecthub.filesync.ItemMetadata;
@@ -43,6 +47,31 @@ public class NetworkToFileOperations {
     this.metadata = metadata;
   }
   
+  private final Value<Integer> counter = new Value<Integer>(Integer.valueOf(0));
+  
+  public void performCommitIfRequired(final Client client, final ValueCallback<Success> cb) {
+    Integer _get = this.counter.get();
+    int _plus = ((_get).intValue() + 1);
+    this.counter.set(Integer.valueOf(_plus));
+    Integer _get_1 = this.counter.get();
+    int _modulo = ((_get_1).intValue() % 20);
+    boolean _tripleNotEquals = (_modulo != 0);
+    if (_tripleNotEquals) {
+      cb.onSuccess(Success.INSTANCE);
+    } else {
+      final DataPromise<Success> op = client.commit();
+      ExceptionListener _asExceptionListener = CallbackUtils.<Success>asExceptionListener(cb);
+      op.catchExceptions(_asExceptionListener);
+      final Closure<Success> _function = new Closure<Success>() {
+        @Override
+        public void apply(final Success it) {
+          cb.onSuccess(Success.INSTANCE);
+        }
+      };
+      op.get(_function);
+    }
+  }
+  
   public void determineOps(final ValueCallback<List<FileOperation>> cb) {
     Node _node = this.params.getNode();
     final LinkListQuery qry = _node.selectAllLinks();
@@ -61,44 +90,52 @@ public class NetworkToFileOperations {
         final Closure2<Link, ValueCallback<Value<Object>>> _function = new Closure2<Link, ValueCallback<Value<Object>>>() {
           @Override
           public void apply(final Link link, final ValueCallback<Value<Object>> itmcb) {
-            final UnauthorizedListener _function = new UnauthorizedListener() {
+            Client _client = link.client();
+            final Closure<Success> _function = new Closure<Success>() {
               @Override
-              public void onUnauthorized(final UnauthorizedResult it) {
-                SyncNotifications _notifications = NetworkToFileOperations.this.params.getNotifications();
-                FileItem _folder = NetworkToFileOperations.this.params.getFolder();
-                _notifications.onInsufficientAuthorization(_folder, link);
-                Value<Object> _value = new Value<Object>(link);
-                itmcb.onSuccess(_value);
+              public void apply(final Success it) {
+                final UnauthorizedListener _function = new UnauthorizedListener() {
+                  @Override
+                  public void onUnauthorized(final UnauthorizedResult it) {
+                    SyncNotifications _notifications = NetworkToFileOperations.this.params.getNotifications();
+                    FileItem _folder = NetworkToFileOperations.this.params.getFolder();
+                    _notifications.onInsufficientAuthorization(_folder, link);
+                    Value<Object> _value = new Value<Object>(link);
+                    itmcb.onSuccess(_value);
+                  }
+                };
+                link.catchUnauthorized(_function);
+                final UndefinedListener _function_1 = new UndefinedListener() {
+                  @Override
+                  public void onUndefined(final UndefinedResult it) {
+                    SyncNotifications _notifications = NetworkToFileOperations.this.params.getNotifications();
+                    Node _node = NetworkToFileOperations.this.params.getNode();
+                    _notifications.onNodeNotDefined(_node, link);
+                    Value<Object> _value = new Value<Object>(link);
+                    itmcb.onSuccess(_value);
+                  }
+                };
+                link.catchUndefined(_function_1);
+                final ExceptionListener _function_2 = new ExceptionListener() {
+                  @Override
+                  public void onFailure(final ExceptionResult it) {
+                    Throwable _exception = it.exception();
+                    itmcb.onFailure(_exception);
+                  }
+                };
+                link.catchExceptions(_function_2);
+                final Closure<Node> _function_3 = new Closure<Node>() {
+                  @Override
+                  public void apply(final Node it) {
+                    Value<Object> _value = new Value<Object>(it);
+                    itmcb.onSuccess(_value);
+                  }
+                };
+                link.get(_function_3);
               }
             };
-            link.catchUnauthorized(_function);
-            final UndefinedListener _function_1 = new UndefinedListener() {
-              @Override
-              public void onUndefined(final UndefinedResult it) {
-                SyncNotifications _notifications = NetworkToFileOperations.this.params.getNotifications();
-                Node _node = NetworkToFileOperations.this.params.getNode();
-                _notifications.onNodeNotDefined(_node, link);
-                Value<Object> _value = new Value<Object>(link);
-                itmcb.onSuccess(_value);
-              }
-            };
-            link.catchUndefined(_function_1);
-            final ExceptionListener _function_2 = new ExceptionListener() {
-              @Override
-              public void onFailure(final ExceptionResult it) {
-                Throwable _exception = it.exception();
-                itmcb.onFailure(_exception);
-              }
-            };
-            link.catchExceptions(_function_2);
-            final Closure<Node> _function_3 = new Closure<Node>() {
-              @Override
-              public void apply(final Node it) {
-                Value<Object> _value = new Value<Object>(it);
-                itmcb.onSuccess(_value);
-              }
-            };
-            link.get(_function_3);
+            ValueCallback<Success> _embed = AsyncCommon.<Success>embed(itmcb, _function);
+            NetworkToFileOperations.this.performCommitIfRequired(_client, _embed);
           }
         };
         final Closure<List<Value<Object>>> _function_1 = new Closure<List<Value<Object>>>() {

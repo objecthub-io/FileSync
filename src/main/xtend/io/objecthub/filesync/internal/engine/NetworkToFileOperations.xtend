@@ -1,14 +1,17 @@
 package io.objecthub.filesync.internal.engine
 
+import com.appjangle.api.Client
 import com.appjangle.api.Node
+import delight.async.AsyncCommon
+import delight.async.Value
+import delight.async.callbacks.ValueCallback
+import delight.functional.Success
+import delight.functional.collections.CollectionsUtils
+import io.nextweb.promise.utils.CallbackUtils
 import io.objecthub.filesync.FileOperation
 import io.objecthub.filesync.ItemMetadata
 import io.objecthub.filesync.Metadata
 import io.objecthub.filesync.SyncParams
-import delight.async.AsyncCommon
-import delight.async.Value
-import delight.async.callbacks.ValueCallback
-import delight.functional.collections.CollectionsUtils
 import java.util.ArrayList
 import java.util.List
 
@@ -28,6 +31,23 @@ class NetworkToFileOperations {
 
 	}
 
+	val Value<Integer> counter = new Value<Integer>(0)
+
+	def performCommitIfRequired(Client client, ValueCallback<Success> cb) {
+		counter.set(counter.get + 1)
+		if (counter.get % 20 !== 0) {
+			cb.onSuccess(Success.INSTANCE)
+
+		} else {
+			//println('FORCE COMMIT')
+			val op = client.commit
+			op.catchExceptions(CallbackUtils.asExceptionListener(cb))
+			op.get [
+				cb.onSuccess(Success.INSTANCE)
+			]
+		}
+	}
+
 	def determineOps(ValueCallback<List<FileOperation>> cb) {
 
 		val qry = params.node.selectAllLinks
@@ -35,53 +55,54 @@ class NetworkToFileOperations {
 		qry.catchExceptions[er|cb.onFailure(er.exception)]
 
 		qry.get [ children |
-			AsyncCommon.forEach(children.links,
-				[ link, itmcb |
-					link.catchUnauthorized[
-						params.notifications.onInsufficientAuthorization(params.folder, link)
-						itmcb.onSuccess(new Value<Object>(link))
-					]
-					link.catchUndefined[
-						params.notifications.onNodeNotDefined(params.node, link)
-						itmcb.onSuccess(new Value<Object>(link))
-					]
-					link.catchExceptions[itmcb.onFailure(exception)]
-					
-					link.get[itmcb.onSuccess(new Value<Object>(it))]
-					
-				],
-				cb.embed [ List<Value<Object>> values |
-					val nodes = new ArrayList<Node>(values.size())
-					for (value : values) {
-						if (value.get instanceof Node) {
-							nodes.add(value.get as Node)
-						} else {
-							
-						}
+			AsyncCommon.forEach(children.links, [ link, ValueCallback<Value<Object>> itmcb |
+
+				performCommitIfRequired(
+					link.client,
+					AsyncCommon.embed(itmcb, [
+						link.catchUnauthorized [
+							params.notifications.onInsufficientAuthorization(params.folder, link)
+							itmcb.onSuccess(new Value<Object>(link))
+						]
+						link.catchUndefined [
+							params.notifications.onNodeNotDefined(params.node, link)
+							itmcb.onSuccess(new Value<Object>(link))
+						]
+						link.catchExceptions[itmcb.onFailure(exception)]
+
+						link.get [
+							itmcb.onSuccess(new Value<Object>(it))
+						]
+					])
+				)
+
+			], AsyncCommon.embed(cb, [ List<Value<Object>> values |
+				val nodes = new ArrayList<Node>(values.size())
+				for (value : values) {
+					if (value.get instanceof Node) {
+						nodes.add(value.get as Node)
+					} else {
 					}
-					val Iterable<Node> remotelyAdded = nodes.determineRemotelyAddedNodes
-					val remotelyRemoved = nodes.determineRemotelyRemovedNodes
-					val remotelyUpdated = nodes.determineRemotelyUpdatedNodes
-					val agg = AsyncCommon.collect(3,
-						AsyncCommon.embed(cb,
-							[ res |
-								cb.onSuccess(CollectionsUtils.flatten(res))
-							]))
-					remotelyAdded.deduceCreateOperations(agg.createCallback)
-					remotelyRemoved.deduceRemoveOperations(agg.createCallback)
-					remotelyUpdated.deduceUpdateOperations(agg.createCallback)
-				])
+				}
+				val Iterable<Node> remotelyAdded = nodes.determineRemotelyAddedNodes
+				val remotelyRemoved = nodes.determineRemotelyRemovedNodes
+				val remotelyUpdated = nodes.determineRemotelyUpdatedNodes
+				val agg = AsyncCommon.collect(3, AsyncCommon.embed(cb, [ res |
+					cb.onSuccess(CollectionsUtils.flatten(res))
+				]))
+				remotelyAdded.deduceCreateOperations(agg.createCallback)
+				remotelyRemoved.deduceRemoveOperations(agg.createCallback)
+				remotelyUpdated.deduceUpdateOperations(agg.createCallback)
+			]))
 		]
 
 	}
 
 	def deduceUpdateOperations(Iterable<Node> remotelyUpdated, ValueCallback<List<FileOperation>> cb) {
 
-		val agg = AsyncCommon.collect(remotelyUpdated.size,
-			AsyncCommon.embed(cb,
-				[ res |
-					cb.onSuccess(CollectionsUtils.flatten(res))
-				]))
+		val agg = AsyncCommon.collect(remotelyUpdated.size, AsyncCommon.embed(cb, [ res |
+			cb.onSuccess(CollectionsUtils.flatten(res))
+		]))
 
 		for (updatedNode : remotelyUpdated) {
 
@@ -93,11 +114,9 @@ class NetworkToFileOperations {
 
 	def deduceCreateOperations(Iterable<Node> remotelyAdded, ValueCallback<List<FileOperation>> cb) {
 
-		val agg = AsyncCommon.collect(remotelyAdded.size,
-			AsyncCommon.embed(cb,
-				[ res |
-					cb.onSuccess(CollectionsUtils.flatten(res))
-				]))
+		val agg = AsyncCommon.collect(remotelyAdded.size, AsyncCommon.embed(cb, [ res |
+			cb.onSuccess(CollectionsUtils.flatten(res))
+		]))
 
 		for (newNode : remotelyAdded) {
 
@@ -109,11 +128,9 @@ class NetworkToFileOperations {
 
 	def deduceRemoveOperations(List<ItemMetadata> remotelyRemoved, ValueCallback<List<FileOperation>> cb) {
 
-		val agg = AsyncCommon.collect(remotelyRemoved.size,
-			AsyncCommon.embed(cb,
-				[ res |
-					cb.onSuccess(CollectionsUtils.flatten(res))
-				]))
+		val agg = AsyncCommon.collect(remotelyRemoved.size, AsyncCommon.embed(cb, [ res |
+			cb.onSuccess(CollectionsUtils.flatten(res))
+		]))
 
 		for (removedNode : remotelyRemoved) {
 
