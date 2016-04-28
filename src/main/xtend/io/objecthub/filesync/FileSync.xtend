@@ -120,7 +120,6 @@ class FileSync {
 							childParams.node = childNode
 							
 							println("Processing "+childNode.uri())
-							// error on Processing http://slicnet.com/mxrogm/mxrogm/xplr/.n/Enterprises/.n/Appjangle/.n/Directions/.n/Projects/.n/Appjangle_Marketing/.n/Ideas/.n/20150608_213944_Promotion_Idea_Offer_Free_Domain_Names_pdf
 							
 							if (childNode.uri().startsWith("http://localhost")) {
 								println("ERROR: Illegal node "+childNode.uri()+" with parent "+params.node.uri())
