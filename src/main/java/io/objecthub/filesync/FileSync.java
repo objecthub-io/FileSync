@@ -21,6 +21,7 @@ import io.objecthub.filesync.SyncParams;
 import io.objecthub.filesync.SynchronizationSettings;
 import io.objecthub.filesync.SynchronizationState;
 import io.objecthub.filesync.internal.engine.FileUtils;
+import io.objecthub.filesync.internal.engine.N;
 import io.objecthub.filesync.internal.engine.SyncFolder;
 import io.objecthub.filesync.internal.engine.convert.ConvertUtils;
 import io.objecthub.filesync.internal.engine.convert.ConverterCollection;
@@ -275,8 +276,27 @@ public class FileSync {
     ConverterCollection _xblockexpression = null;
     {
       final ConverterCollection coll = new ConverterCollection();
-      FileToTextNode _fileToTextNode = new FileToTextNode();
+      String _HTML_VALUE = N.HTML_VALUE();
+      FileToTextNode _fileToTextNode = new FileToTextNode(".html", _HTML_VALUE, "./baseHtml");
       coll.addConverter(_fileToTextNode);
+      String _MICRO_LIBRARY = N.MICRO_LIBRARY();
+      FileToTextNode _fileToTextNode_1 = new FileToTextNode(".js", _MICRO_LIBRARY, "./baseJs");
+      coll.addConverter(_fileToTextNode_1);
+      String _COFFEESCRIPT = N.COFFEESCRIPT();
+      FileToTextNode _fileToTextNode_2 = new FileToTextNode(".coffee", _COFFEESCRIPT, "./baseCS");
+      coll.addConverter(_fileToTextNode_2);
+      String _CSS = N.CSS();
+      FileToTextNode _fileToTextNode_3 = new FileToTextNode(".css", _CSS, "./baseCss");
+      coll.addConverter(_fileToTextNode_3);
+      String _CLASS = N.CLASS();
+      FileToTextNode _fileToTextNode_4 = new FileToTextNode(".clazz", _CLASS, null);
+      coll.addConverter(_fileToTextNode_4);
+      String _ATTRIBUTE = N.ATTRIBUTE();
+      FileToTextNode _fileToTextNode_5 = new FileToTextNode(".attribute", _ATTRIBUTE, null);
+      coll.addConverter(_fileToTextNode_5);
+      String _PLAIN_JS = N.PLAIN_JS();
+      FileToTextNode _fileToTextNode_6 = new FileToTextNode(".js", _PLAIN_JS, null);
+      coll.addConverter(_fileToTextNode_6);
       final Closure2<Node, ValueCallback<Boolean>> _function = new Closure2<Node, ValueCallback<Boolean>>() {
         @Override
         public void apply(final Node node, final ValueCallback<Boolean> cb) {

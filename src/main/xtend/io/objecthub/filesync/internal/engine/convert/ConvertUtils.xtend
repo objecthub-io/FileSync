@@ -23,29 +23,18 @@ import io.nextweb.promise.DataOperation
 
 class ConvertUtils {
 
-	
-
 	val textValueExtensions = #{
 		N.HTML_VALUE -> '.html',
 		N.ATTRIBUTE -> '.attribute',
-		N.CLASS -> '.class',
+		N.CLASS -> '.clazz',
 		N.CSS -> '.css',
-		N.JAVASCRIPT -> '.js',
+		N.MICRO_LIBRARY -> '.js',
+		N.PLAIN_JS -> '.js',
 		N.COFFEESCRIPT -> '.coffee',
 		N.RICHTEXT -> '.htm'	
 	}
 
-	def isTextValue(String fileName) {
-		val ext = fileName.getExtension
-
-		textValueExtensions.containsValue('.'+ext)
-	}
-
-	def isTextType(Link link) {
-		
-		
-		textValueExtensions.keySet.contains(link.uri())
-	}
+	
 
 	def getFileExtension(Node forNode, ValueCallback<String> cb) {
 
@@ -113,39 +102,26 @@ class ConvertUtils {
 		if (ext == ".html") {
 			
 			res.add(toNode.appendSafe(session.HTML_VALUE))
-			
-			
-			
+
 				
 		} else if (ext == ".htm") {
 			res.add(toNode.appendSafe(session.RICHTEXT))
-			
-			
-		
+
 			
 		} else if (ext == ".js") {
 			
 			
-			res.add(toNode.appendSafe(session.JAVASCRIPT))
-			
-			
-			
+			res.add(toNode.appendSafe(session.MICRO_LIBRARY))
+		
 			
 		} else if (ext == ".coffee") {
 			
 			res.add(toNode.appendSafe(session.COFFEESCRIPT))
-			
-			
-			
-			
+		
 		} else if (ext == ".css") {
 			
 			res.add(toNode.appendSafe(session.CSS))
-			
-			
-			
-			
-			
+	
 		} else if (ext == ".type") {
 			
 			res.add(toNode.appendSafe(session.ATTRIBUTE))

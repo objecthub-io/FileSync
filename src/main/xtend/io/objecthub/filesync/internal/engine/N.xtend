@@ -32,12 +32,20 @@ class N {
 		getType(client, 'plain-cs')
 	}
 	
-	def static JAVASCRIPT() {
+	def static MICRO_LIBRARY() {
 		getTypeLink('javascript')
 	}
 	
-	def JAVASCRIPT(Client client) {
+	def MICRO_LIBRARY(Client client) {
 		getType(client, 'javascript')
+	}
+	
+	def static PLAIN_JS() {
+		getTypeLink("plain-js")
+	}
+	
+	def static PLAIN_JS(Client client) {
+		getType(client, "plain-js")
 	}
 	
 	def static CSS() {

@@ -41,22 +41,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class ConvertUtils {
-  private final Map<String, String> textValueExtensions = Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(Pair.<String, String>of(N.HTML_VALUE(), ".html"), Pair.<String, String>of(N.ATTRIBUTE(), ".attribute"), Pair.<String, String>of(N.CLASS(), ".class"), Pair.<String, String>of(N.CSS(), ".css"), Pair.<String, String>of(N.JAVASCRIPT(), ".js"), Pair.<String, String>of(N.COFFEESCRIPT(), ".coffee"), Pair.<String, String>of(N.RICHTEXT(), ".htm")));
-  
-  public boolean isTextValue(final String fileName) {
-    boolean _xblockexpression = false;
-    {
-      final String ext = this.futils.getExtension(fileName);
-      _xblockexpression = this.textValueExtensions.containsValue(("." + ext));
-    }
-    return _xblockexpression;
-  }
-  
-  public boolean isTextType(final Link link) {
-    Set<String> _keySet = this.textValueExtensions.keySet();
-    String _uri = link.uri();
-    return _keySet.contains(_uri);
-  }
+  private final Map<String, String> textValueExtensions = Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(Pair.<String, String>of(N.HTML_VALUE(), ".html"), Pair.<String, String>of(N.ATTRIBUTE(), ".attribute"), Pair.<String, String>of(N.CLASS(), ".clazz"), Pair.<String, String>of(N.CSS(), ".css"), Pair.<String, String>of(N.MICRO_LIBRARY(), ".js"), Pair.<String, String>of(N.PLAIN_JS(), ".js"), Pair.<String, String>of(N.COFFEESCRIPT(), ".coffee"), Pair.<String, String>of(N.RICHTEXT(), ".htm")));
   
   public void getFileExtension(final Node forNode, final ValueCallback<String> cb) {
     final LinkListQuery qry = forNode.selectAllLinks();
@@ -146,8 +131,8 @@ public class ConvertUtils {
       } else {
         boolean _equals_2 = Objects.equal(ext, ".js");
         if (_equals_2) {
-          Link _JAVASCRIPT = this.n.JAVASCRIPT(session);
-          Query _appendSafe_2 = toNode.appendSafe(_JAVASCRIPT);
+          Link _MICRO_LIBRARY = this.n.MICRO_LIBRARY(session);
+          Query _appendSafe_2 = toNode.appendSafe(_MICRO_LIBRARY);
           res.add(_appendSafe_2);
         } else {
           boolean _equals_3 = Objects.equal(ext, ".coffee");

@@ -32,12 +32,20 @@ public class N {
     return N.getType(client, "plain-cs");
   }
   
-  public static String JAVASCRIPT() {
+  public static String MICRO_LIBRARY() {
     return N.getTypeLink("javascript");
   }
   
-  public Link JAVASCRIPT(final Client client) {
+  public Link MICRO_LIBRARY(final Client client) {
     return N.getType(client, "javascript");
+  }
+  
+  public static String PLAIN_JS() {
+    return N.getTypeLink("plain-js");
+  }
+  
+  public static Link PLAIN_JS(final Client client) {
+    return N.getType(client, "plain-js");
   }
   
   public static String CSS() {

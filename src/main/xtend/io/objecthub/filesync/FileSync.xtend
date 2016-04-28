@@ -3,7 +3,13 @@ package io.objecthub.filesync
 import com.appjangle.api.Link
 import com.appjangle.api.Node
 import com.appjangle.api.nodes.Token
+import de.mxro.file.FileItem
+import de.mxro.file.Jre.FilesJre
+import delight.async.AsyncCommon
+import delight.async.callbacks.ValueCallback
+import delight.functional.Success
 import io.objecthub.filesync.internal.engine.FileUtils
+import io.objecthub.filesync.internal.engine.N
 import io.objecthub.filesync.internal.engine.SyncFolder
 import io.objecthub.filesync.internal.engine.convert.ConvertUtils
 import io.objecthub.filesync.internal.engine.convert.ConverterCollection
@@ -11,11 +17,6 @@ import io.objecthub.filesync.internal.engine.convert.FileToTextNode
 import io.objecthub.filesync.internal.engine.convert.FolderToNode
 import io.objecthub.filesync.internal.engine.convert.FolderToNothing
 import io.objecthub.filesync.internal.engine.convert.NodeToNothing
-import de.mxro.file.FileItem
-import de.mxro.file.Jre.FilesJre
-import delight.async.AsyncCommon
-import delight.async.callbacks.ValueCallback
-import delight.functional.Success
 import java.io.File
 import java.util.LinkedList
 
@@ -161,8 +162,14 @@ class FileSync {
 
 		val coll = new ConverterCollection
 
-		coll.addConverter(new FileToTextNode)
-
+		coll.addConverter(new FileToTextNode(".html", N.HTML_VALUE, "./baseHtml"))
+		coll.addConverter(new FileToTextNode(".js", N.MICRO_LIBRARY, "./baseJs"))
+		coll.addConverter(new FileToTextNode(".coffee", N.COFFEESCRIPT, "./baseCS"))
+		coll.addConverter(new FileToTextNode(".css", N.CSS, "./baseCss"))
+		coll.addConverter(new FileToTextNode(".clazz", N.CLASS, null))
+		coll.addConverter(new FileToTextNode(".attribute", N.ATTRIBUTE, null))
+		coll.addConverter(new FileToTextNode(".js", N.PLAIN_JS, null))
+		
 		coll.addConverter(
 			new NodeToNothing [ node, cb |
 				cb.onSuccess(node.value() instanceof Token)
