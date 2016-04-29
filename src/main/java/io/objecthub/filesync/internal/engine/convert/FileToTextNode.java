@@ -30,9 +30,12 @@ import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 
 @SuppressWarnings("all")
 public class FileToTextNode implements Converter {
+  private final String id;
+  
   private final String fileExtension;
   
   private final String markerClass;
@@ -43,6 +46,7 @@ public class FileToTextNode implements Converter {
   public boolean worksOn(final FileItem source) {
     String _name = source.getName();
     final String ext = this.futils.getExtension(_name);
+    InputOutput.<String>println(((ext + " == ") + this.fileExtension));
     return Objects.equal(ext, this.fileExtension);
   }
   
@@ -112,8 +116,7 @@ public class FileToTextNode implements Converter {
           
           @Override
           public String converter() {
-            Class<? extends FileToTextNode> _class = FileToTextNode.this.getClass();
-            return _class.toString();
+            return FileToTextNode.this.id;
           }
         });
         final ArrayList<DataOperation<?>> res = CollectionLiterals.<DataOperation<?>>newArrayList();
@@ -205,8 +208,7 @@ public class FileToTextNode implements Converter {
                       
                       @Override
                       public String converter() {
-                        Class<? extends FileToTextNode> _class = FileToTextNode.this.getClass();
-                        return _class.toString();
+                        return FileToTextNode.this.id;
                       }
                     });
                   }
@@ -249,6 +251,7 @@ public class FileToTextNode implements Converter {
   public void updateFiles(final FileItem folder, final Metadata metadata, final Node source, final ValueCallback<List<FileOperation>> cb) {
     ItemMetadata _get = metadata.get(source);
     final String fileName = _get.name();
+    InputOutput.<String>println(("update file " + fileName));
     final Closure<Node> _function = new Closure<Node>() {
       @Override
       public void apply(final Node node) {
@@ -287,8 +290,7 @@ public class FileToTextNode implements Converter {
                 
                 @Override
                 public String converter() {
-                  Class<? extends FileToTextNode> _class = FileToTextNode.this.getClass();
-                  return _class.toString();
+                  return FileToTextNode.this.id;
                 }
               });
             }
@@ -325,9 +327,15 @@ public class FileToTextNode implements Converter {
   @Extension
   private FileUtils futils = new FileUtils();
   
-  public FileToTextNode(final String fileExtension, final String markerClass, final String valueReference) {
+  public FileToTextNode(final String id, final String fileExtension, final String markerClass, final String valueReference) {
+    this.id = id;
     this.fileExtension = fileExtension;
     this.markerClass = markerClass;
     this.valueReference = valueReference;
+  }
+  
+  @Override
+  public String id() {
+    return this.id;
   }
 }

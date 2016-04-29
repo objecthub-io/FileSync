@@ -162,13 +162,13 @@ class FileSync {
 
 		val coll = new ConverterCollection
 
-		coll.addConverter(new FileToTextNode(".html", N.HTML_VALUE, "./baseHtml"))
-		coll.addConverter(new FileToTextNode(".js", N.MICRO_LIBRARY, "./baseJs"))
-		coll.addConverter(new FileToTextNode(".coffee", N.COFFEESCRIPT, "./baseCS"))
-		coll.addConverter(new FileToTextNode(".css", N.CSS, "./baseCss"))
-		coll.addConverter(new FileToTextNode(".clazz", N.CLASS, null))
-		coll.addConverter(new FileToTextNode(".attribute", N.ATTRIBUTE, null))
-		coll.addConverter(new FileToTextNode(".js", N.PLAIN_JS, null))
+		coll.addConverter(new FileToTextNode("html", ".html", N.HTML_VALUE, "./baseHtml"))
+		coll.addConverter(new FileToTextNode("js", ".js", N.MICRO_LIBRARY, "./baseJs"))
+		coll.addConverter(new FileToTextNode("coffee", ".coffee", N.COFFEESCRIPT, "./baseCS"))
+		coll.addConverter(new FileToTextNode("css", ".css", N.CSS, "./baseCss"))
+		coll.addConverter(new FileToTextNode("clazz", ".clazz", N.CLASS, null))
+		coll.addConverter(new FileToTextNode("attribute", ".attribute", N.ATTRIBUTE, null))
+		coll.addConverter(new FileToTextNode("plain-js", ".js", N.PLAIN_JS, null))
 		
 		coll.addConverter(
 			new NodeToNothing [ node, cb |

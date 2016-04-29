@@ -51,4 +51,8 @@ class FolderToNothing implements Converter {
 		throw new IllegalStateException("This operation should never be triggered for this converter.")
 	}
 	
+	override id() {
+		"folder-to-nothing"
+	}
+	
 }

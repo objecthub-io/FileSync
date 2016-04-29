@@ -51,4 +51,8 @@ class NodeToNothing implements Converter {
 		throw new IllegalStateException("This operation should never be triggered for this converter.")
 	}
 	
+	override id() {
+		"node-to-nothing"
+	}
+	
 }

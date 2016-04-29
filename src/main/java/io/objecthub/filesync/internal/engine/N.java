@@ -5,10 +5,10 @@ import com.appjangle.api.Link;
 
 @SuppressWarnings("all")
 public class N {
-  private final static String ID = "100";
+  public static String TYPE_TEMPLATE = "https://beta.objecthub.io/dev/~100/~hub/hub/repo/~objects/~%%%type%%%/versions/~*0";
   
   public static String getTypeLink(final String type) {
-    return (((("https://beta.objecthub.io/dev/~" + N.ID) + "/~hub/hub/repo/~objects/~") + type) + "/versions/~*0");
+    return N.TYPE_TEMPLATE.replace("%%%type%%%", type);
   }
   
   public static Link getType(final Client client, final String type) {

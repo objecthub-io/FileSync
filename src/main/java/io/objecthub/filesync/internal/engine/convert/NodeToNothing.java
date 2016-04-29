@@ -61,4 +61,9 @@ public class NodeToNothing implements Converter {
   public void removeFiles(final FileItem folder, final Metadata metadata, final ItemMetadata item, final ValueCallback<List<FileOperation>> cb) {
     throw new IllegalStateException("This operation should never be triggered for this converter.");
   }
+  
+  @Override
+  public String id() {
+    return "node-to-nothing";
+  }
 }

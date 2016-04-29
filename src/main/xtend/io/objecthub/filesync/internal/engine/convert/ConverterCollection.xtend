@@ -68,7 +68,7 @@ class ConverterCollection implements Converter {
 	
 	def private findConverter(ItemMetadata forItem, ValueCallback<Converter> cb) {
 		for (c:converters) {
-			if (c.class.toString.equals(forItem.converter)) {
+			if (c.id.equals(forItem.converter)) {
 				cb.onSuccess(c)
 				return
 			}
@@ -141,6 +141,10 @@ class ConverterCollection implements Converter {
 		findConverter(item, cb.embed [ converter |
 			converter.removeFiles(folder, metadata, item, cb)
 		])
+	}
+	
+	override id() {
+		"collection"
 	}
 	
 }

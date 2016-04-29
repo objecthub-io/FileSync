@@ -6,7 +6,12 @@ import delight.async.callbacks.ValueCallback
 import java.util.List
 
 interface Converter {
-
+	
+	/**
+	 * Retrieves the unique ID for this converter
+	 */
+	def String id()
+	
 	def boolean worksOn(FileItem source)
 	
 	def void worksOn(Node node, ValueCallback<Boolean> cb)

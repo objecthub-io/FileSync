@@ -26,6 +26,8 @@ import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
 public class FolderToNode implements Converter {
+  private final static String ID = "folder";
+  
   @Override
   public boolean worksOn(final FileItem source) {
     return source.isDirectory();
@@ -75,8 +77,7 @@ public class FolderToNode implements Converter {
             
             @Override
             public String converter() {
-              Class<? extends FolderToNode> _class = FolderToNode.this.getClass();
-              return _class.toString();
+              return FolderToNode.ID;
             }
           });
         ArrayList<DataOperation<?>> _newArrayList = CollectionLiterals.<DataOperation<?>>newArrayList(baseNode);
@@ -136,8 +137,7 @@ public class FolderToNode implements Converter {
                 
                 @Override
                 public String converter() {
-                  Class<? extends FolderToNode> _class = FolderToNode.this.getClass();
-                  return _class.toString();
+                  return FolderToNode.ID;
                 }
               });
           }
@@ -181,4 +181,9 @@ public class FolderToNode implements Converter {
   
   @Extension
   private N n = new N();
+  
+  @Override
+  public String id() {
+    return FolderToNode.ID;
+  }
 }

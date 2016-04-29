@@ -11,6 +11,11 @@ import java.util.List;
 
 @SuppressWarnings("all")
 public interface Converter {
+  /**
+   * Retrieves the unique ID for this converter
+   */
+  public abstract String id();
+  
   public abstract boolean worksOn(final FileItem source);
   
   public abstract void worksOn(final Node node, final ValueCallback<Boolean> cb);

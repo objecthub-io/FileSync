@@ -277,25 +277,25 @@ public class FileSync {
     {
       final ConverterCollection coll = new ConverterCollection();
       String _HTML_VALUE = N.HTML_VALUE();
-      FileToTextNode _fileToTextNode = new FileToTextNode(".html", _HTML_VALUE, "./baseHtml");
+      FileToTextNode _fileToTextNode = new FileToTextNode("html", ".html", _HTML_VALUE, "./baseHtml");
       coll.addConverter(_fileToTextNode);
       String _MICRO_LIBRARY = N.MICRO_LIBRARY();
-      FileToTextNode _fileToTextNode_1 = new FileToTextNode(".js", _MICRO_LIBRARY, "./baseJs");
+      FileToTextNode _fileToTextNode_1 = new FileToTextNode("js", ".js", _MICRO_LIBRARY, "./baseJs");
       coll.addConverter(_fileToTextNode_1);
       String _COFFEESCRIPT = N.COFFEESCRIPT();
-      FileToTextNode _fileToTextNode_2 = new FileToTextNode(".coffee", _COFFEESCRIPT, "./baseCS");
+      FileToTextNode _fileToTextNode_2 = new FileToTextNode("coffee", ".coffee", _COFFEESCRIPT, "./baseCS");
       coll.addConverter(_fileToTextNode_2);
       String _CSS = N.CSS();
-      FileToTextNode _fileToTextNode_3 = new FileToTextNode(".css", _CSS, "./baseCss");
+      FileToTextNode _fileToTextNode_3 = new FileToTextNode("css", ".css", _CSS, "./baseCss");
       coll.addConverter(_fileToTextNode_3);
       String _CLASS = N.CLASS();
-      FileToTextNode _fileToTextNode_4 = new FileToTextNode(".clazz", _CLASS, null);
+      FileToTextNode _fileToTextNode_4 = new FileToTextNode("clazz", ".clazz", _CLASS, null);
       coll.addConverter(_fileToTextNode_4);
       String _ATTRIBUTE = N.ATTRIBUTE();
-      FileToTextNode _fileToTextNode_5 = new FileToTextNode(".attribute", _ATTRIBUTE, null);
+      FileToTextNode _fileToTextNode_5 = new FileToTextNode("attribute", ".attribute", _ATTRIBUTE, null);
       coll.addConverter(_fileToTextNode_5);
       String _PLAIN_JS = N.PLAIN_JS();
-      FileToTextNode _fileToTextNode_6 = new FileToTextNode(".js", _PLAIN_JS, null);
+      FileToTextNode _fileToTextNode_6 = new FileToTextNode("plain-js", ".js", _PLAIN_JS, null);
       coll.addConverter(_fileToTextNode_6);
       final Closure2<Node, ValueCallback<Boolean>> _function = new Closure2<Node, ValueCallback<Boolean>>() {
         @Override

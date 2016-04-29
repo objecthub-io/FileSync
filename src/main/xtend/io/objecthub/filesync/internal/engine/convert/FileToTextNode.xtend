@@ -1,6 +1,5 @@
 package io.objecthub.filesync.internal.engine.convert
 
-import com.appjangle.api.Link
 import com.appjangle.api.Node
 import de.mxro.file.FileItem
 import delight.async.AsyncCommon
@@ -18,13 +17,15 @@ import java.util.List
 import static extension delight.async.AsyncCommon.*
 
 class FileToTextNode implements Converter {
-
+	
+	val String id
 	val String fileExtension
 	val String markerClass
 	val String valueReference
 
 	override worksOn(FileItem source) {
 		val ext = source.name.getExtension
+		println(ext+' == '+fileExtension)
 		return ext == fileExtension
 	}
 
@@ -36,7 +37,9 @@ class FileToTextNode implements Converter {
 
 		qry.get [ links |
 			for (link : links) {
+				
 				if (link.uri() == markerClass) {
+					
 					cb.onSuccess(true)
 					return
 				}
@@ -76,7 +79,7 @@ class FileToTextNode implements Converter {
 				}
 
 				override converter() {
-					FileToTextNode.this.class.toString
+					id
 				}
 
 			})
@@ -151,7 +154,7 @@ class FileToTextNode implements Converter {
 								}
 
 								override converter() {
-									FileToTextNode.this.class.toString
+									id
 								}
 
 							})
@@ -183,7 +186,9 @@ class FileToTextNode implements Converter {
 	override updateFiles(FileItem folder, Metadata metadata, Node source, ValueCallback<List<FileOperation>> cb) {
 
 		val fileName = metadata.get(source).name
-
+		
+		println('update file '+fileName)
+		
 		obtainValueNode(source, AsyncCommon.embed(cb, [ node |
 			val String content = node.value(String)
 
@@ -215,7 +220,7 @@ class FileToTextNode implements Converter {
 						}
 
 						override converter() {
-							FileToTextNode.this.class.toString
+							id
 						}
 
 					})
@@ -245,10 +250,15 @@ class FileToTextNode implements Converter {
 	extension ConvertUtils cutils = new ConvertUtils
 	extension FileUtils futils = new FileUtils
 
-	new(String fileExtension, String markerClass, String valueReference) {
+	new(String id, String fileExtension, String markerClass, String valueReference) {
+		this.id = id
 		this.fileExtension = fileExtension
 		this.markerClass = markerClass
 		this.valueReference = valueReference
+	}
+	
+	override id() {
+		id
 	}
 
 }

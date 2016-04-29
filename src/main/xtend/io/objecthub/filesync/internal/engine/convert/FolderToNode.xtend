@@ -17,7 +17,9 @@ import java.util.List
 import static extension delight.async.AsyncCommon.*
 
 class FolderToNode implements Converter {
-
+	
+	val static ID = "folder"
+	
 	override worksOn(FileItem source) {
 		source.directory
 	}
@@ -54,7 +56,7 @@ class FolderToNode implements Converter {
 						}
 
 						override converter() {
-							FolderToNode.this.class.toString
+							ID
 						}
 
 					})
@@ -114,7 +116,7 @@ class FolderToNode implements Converter {
 								}
 
 								override converter() {
-									FolderToNode.this.class.toString
+									ID
 								}
 
 							})
@@ -142,10 +144,16 @@ class FolderToNode implements Converter {
 
 		cb.onSuccess(ops)
 	}
-
+	
+	
+	
 	extension ConvertUtils utils = new ConvertUtils
 	extension FileUtils futils = new FileUtils
 	extension N n = new N
+	
+	override id() {
+		ID
+	}
 	
 
 }

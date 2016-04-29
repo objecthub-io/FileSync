@@ -5,10 +5,13 @@ import com.appjangle.api.Link
 
 class N {
 	
-	static val ID = "100"
+	
+	
+	public static var TYPE_TEMPLATE = "https://beta.objecthub.io/dev/~100/~hub/hub/repo/~objects/~%%%type%%%/versions/~*0"
 	
 	def static String getTypeLink(String type) {
-		"https://beta.objecthub.io/dev/~"+ID+"/~hub/hub/repo/~objects/~"+type+"/versions/~*0"	
+		TYPE_TEMPLATE.replace("%%%type%%%", type)
+			
 	}
 	
 	def static Link getType(Client client, String type) {

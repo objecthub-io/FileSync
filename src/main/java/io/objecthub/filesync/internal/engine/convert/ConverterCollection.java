@@ -99,10 +99,9 @@ public class ConverterCollection implements Converter {
   
   private void findConverter(final ItemMetadata forItem, final ValueCallback<Converter> cb) {
     for (final Converter c : this.converters) {
-      Class<? extends Converter> _class = c.getClass();
-      String _string = _class.toString();
+      String _id = c.id();
       String _converter = forItem.converter();
-      boolean _equals = _string.equals(_converter);
+      boolean _equals = _id.equals(_converter);
       if (_equals) {
         cb.onSuccess(c);
         return;
@@ -233,5 +232,10 @@ public class ConverterCollection implements Converter {
     };
     ValueCallback<Converter> _embed = AsyncCommon.<Converter>embed(cb, _function);
     this.findConverter(item, _embed);
+  }
+  
+  @Override
+  public String id() {
+    return "collection";
   }
 }
