@@ -89,70 +89,8 @@ public class FileUtils {
         boolean valid = ((c >= 'a') && (c <= 'z'));
         valid = (valid || ((c >= 'A') && (c <= 'Z')));
         valid = (valid || ((c >= '0') && (c <= '9')));
-        boolean _or = false;
-        boolean _or_1 = false;
-        boolean _or_2 = false;
-        boolean _or_3 = false;
-        boolean _or_4 = false;
-        if (valid) {
-          _or_4 = true;
-        } else {
-          char _charAt = "_".charAt(0);
-          boolean _equals = (c == _charAt);
-          _or_4 = _equals;
-        }
-        if (_or_4) {
-          _or_3 = true;
-        } else {
-          char _charAt_1 = "-".charAt(0);
-          boolean _equals_1 = (c == _charAt_1);
-          _or_3 = _equals_1;
-        }
-        if (_or_3) {
-          _or_2 = true;
-        } else {
-          char _charAt_2 = ".".charAt(0);
-          boolean _equals_2 = (c == _charAt_2);
-          _or_2 = _equals_2;
-        }
-        if (_or_2) {
-          _or_1 = true;
-        } else {
-          char _charAt_3 = "#".charAt(0);
-          boolean _equals_3 = (c == _charAt_3);
-          _or_1 = _equals_3;
-        }
-        if (_or_1) {
-          _or = true;
-        } else {
-          boolean _and = false;
-          if (!dirSeparators) {
-            _and = false;
-          } else {
-            boolean _or_5 = false;
-            char _charAt_4 = "/".charAt(0);
-            boolean _equals_4 = (c == _charAt_4);
-            if (_equals_4) {
-              _or_5 = true;
-            } else {
-              char _charAt_5 = "\\".charAt(0);
-              boolean _equals_5 = (c == _charAt_5);
-              _or_5 = _equals_5;
-            }
-            _and = _or_5;
-          }
-          _or = _and;
-        }
-        valid = _or;
-        boolean _or_6 = false;
-        if (valid) {
-          _or_6 = true;
-        } else {
-          char _charAt_6 = " ".charAt(0);
-          boolean _equals_6 = (c == _charAt_6);
-          _or_6 = _equals_6;
-        }
-        valid = _or_6;
+        valid = (((((valid || (c == "_".charAt(0))) || (c == "-".charAt(0))) || (c == ".".charAt(0))) || (c == "#".charAt(0))) || (dirSeparators && ((c == "/".charAt(0)) || (c == "\\".charAt(0)))));
+        valid = (valid || (c == " ".charAt(0)));
         if (valid) {
           rc.append(c);
         } else {
@@ -245,15 +183,7 @@ public class FileUtils {
   public static boolean isSimpleCharacter(final char character) {
     boolean found = false;
     for (final char element : FileUtils.allowedCharacters) {
-      boolean _or = false;
-      if ((found || (character == element))) {
-        _or = true;
-      } else {
-        char _upperCase = Character.toUpperCase(element);
-        boolean _equals = (character == _upperCase);
-        _or = _equals;
-      }
-      found = _or;
+      found = ((found || (character == element)) || (character == Character.toUpperCase(element)));
     }
     return found;
   }

@@ -35,14 +35,7 @@ public class ConverterCollection implements Converter {
     {
       boolean res = false;
       for (final Converter c : this.converters) {
-        boolean _or = false;
-        if (res) {
-          _or = true;
-        } else {
-          boolean _worksOn = c.worksOn(source);
-          _or = _worksOn;
-        }
-        res = _or;
+        res = (res || c.worksOn(source));
       }
       _xblockexpression = res;
     }

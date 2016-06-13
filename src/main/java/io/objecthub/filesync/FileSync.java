@@ -102,24 +102,7 @@ public class FileSync {
         final Function1<FileItem, Boolean> _function = new Function1<FileItem, Boolean>() {
           @Override
           public Boolean apply(final FileItem it) {
-            boolean _and = false;
-            boolean _and_1 = false;
-            boolean _isDirectory = it.isDirectory();
-            if (!_isDirectory) {
-              _and_1 = false;
-            } else {
-              boolean _visible = it.getVisible();
-              _and_1 = _visible;
-            }
-            if (!_and_1) {
-              _and = false;
-            } else {
-              String _name = it.getName();
-              boolean _startsWith = _name.startsWith(".");
-              boolean _not = (!_startsWith);
-              _and = _not;
-            }
-            return Boolean.valueOf(_and);
+            return Boolean.valueOf(((it.isDirectory() && it.getVisible()) && (!it.getName().startsWith("."))));
           }
         };
         final Iterable<FileItem> toSync = IterableExtensions.<FileItem>filter(_children, _function);
@@ -166,29 +149,12 @@ public class FileSync {
               return;
             }
             Link qry = null;
-            boolean _and = false;
-            boolean _and_1 = false;
-            if (!withinSyncRoots) {
-              _and_1 = false;
-            } else {
-              String _secret = matchedSyncRoot.secret();
-              boolean _tripleNotEquals = (_secret != null);
-              _and_1 = _tripleNotEquals;
-            }
-            if (!_and_1) {
-              _and = false;
-            } else {
-              String _secret_1 = matchedSyncRoot.secret();
-              int _length = _secret_1.length();
-              boolean _greaterThan = (_length > 0);
-              _and = _greaterThan;
-            }
-            if (_and) {
+            if (((withinSyncRoots && (matchedSyncRoot.secret() != null)) && (matchedSyncRoot.secret().length() > 0))) {
               Node _node_1 = params.getNode();
               Client _client = _node_1.client();
               String _uri_6 = itmmetadata.uri();
-              String _secret_2 = matchedSyncRoot.secret();
-              Link _link = _client.link(_uri_6, _secret_2);
+              String _secret = matchedSyncRoot.secret();
+              Link _link = _client.link(_uri_6, _secret);
               qry = _link;
             } else {
               Node _node_2 = params.getNode();
@@ -320,17 +286,7 @@ public class FileSync {
       final Function<FileItem, Boolean> _function_2 = new Function<FileItem, Boolean>() {
         @Override
         public Boolean apply(final FileItem file) {
-          boolean _or = false;
-          String _name = file.getName();
-          boolean _startsWith = _name.startsWith(".");
-          if (_startsWith) {
-            _or = true;
-          } else {
-            boolean _visible = file.getVisible();
-            boolean _not = (!_visible);
-            _or = _not;
-          }
-          return Boolean.valueOf(_or);
+          return Boolean.valueOf((file.getName().startsWith(".") || (!file.getVisible())));
         }
       };
       FolderToNothing _folderToNothing = new FolderToNothing(_function_2);
