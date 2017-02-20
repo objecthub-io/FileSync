@@ -15,9 +15,7 @@ import delight.async.callbacks.ValueCallback;
 import delight.functional.Closure;
 import delight.functional.Success;
 import io.nextweb.promise.DataOperation;
-import io.nextweb.promise.DataPromise;
 import io.nextweb.promise.callbacks.DataCallback;
-import io.nextweb.promise.exceptions.DataExceptionManager;
 import io.nextweb.promise.exceptions.ExceptionListener;
 import io.nextweb.promise.exceptions.ExceptionResult;
 import io.nextweb.promise.exceptions.UndefinedListener;
@@ -48,8 +46,7 @@ public class ConvertUtils {
     final ExceptionListener _function = new ExceptionListener() {
       @Override
       public void onFailure(final ExceptionResult er) {
-        Throwable _exception = er.exception();
-        cb.onFailure(_exception);
+        cb.onFailure(er.exception());
       }
     };
     qry.catchExceptions(_function);
@@ -58,11 +55,9 @@ public class ConvertUtils {
       public void apply(final LinkList links) {
         Set<Map.Entry<String, String>> _entrySet = ConvertUtils.this.textValueExtensions.entrySet();
         for (final Map.Entry<String, String> mapping : _entrySet) {
-          String _key = mapping.getKey();
-          boolean _contains = links.contains(_key);
+          boolean _contains = links.contains(mapping.getKey());
           if (_contains) {
-            String _value = mapping.getValue();
-            cb.onSuccess(_value);
+            cb.onSuccess(mapping.getValue());
             return;
           }
         }
@@ -77,29 +72,22 @@ public class ConvertUtils {
     final NetworkOperation _function = new NetworkOperation() {
       @Override
       public void apply(final NetworkOperationContext ctx, final ValueCallback<List<DataOperation<?>>> opscb) {
-        String _name = cachedFile.name();
-        metadata.remove(_name);
-        Client _session = ctx.session();
-        final Link nodeToBeRemoved = _session.link(address);
+        metadata.remove(cachedFile.name());
+        final Link nodeToBeRemoved = ctx.session().link(address);
         final Node parent = ctx.parent();
         final ArrayList<DataOperation<?>> list = new ArrayList<DataOperation<?>>();
-        Client _client = parent.client();
-        Link _link = _client.link(parent);
-        boolean _hasDirectChild = ConvertUtils.this.qxt.hasDirectChild(_link, nodeToBeRemoved);
+        boolean _hasDirectChild = ConvertUtils.this.qxt.hasDirectChild(parent.client().link(parent), nodeToBeRemoved);
         if (_hasDirectChild) {
-          DataExceptionManager _exceptionManager = nodeToBeRemoved.getExceptionManager();
           final Closure<Success> _function = new Closure<Success>() {
             @Override
             public void apply(final Success it) {
               opscb.onSuccess(list);
             }
           };
-          ValueCallback<Success> _embed = AsyncCommon.<Success>embed(opscb, _function);
-          final DataCallback<Success> innercb = CallbackUtils.<Success>asDataCallback(_exceptionManager, _embed);
+          final DataCallback<Success> innercb = CallbackUtils.<Success>asDataCallback(nodeToBeRemoved.getExceptionManager(), AsyncCommon.<Success>embed(opscb, _function));
           ConvertUtils.this.ext.removeRecursive(parent, nodeToBeRemoved, innercb);
         } else {
-          DataPromise<Success> _remove = parent.remove(nodeToBeRemoved);
-          list.add(_remove);
+          list.add(parent.remove(nodeToBeRemoved));
           opscb.onSuccess(list);
         }
       }
@@ -119,39 +107,27 @@ public class ConvertUtils {
     ext = ("." + ext);
     boolean _equals = Objects.equal(ext, ".html");
     if (_equals) {
-      Link _HTML_VALUE = this.n.HTML_VALUE(session);
-      Query _appendSafe = toNode.appendSafe(_HTML_VALUE);
-      res.add(_appendSafe);
+      res.add(toNode.appendSafe(this.n.HTML_VALUE(session)));
     } else {
       boolean _equals_1 = Objects.equal(ext, ".htm");
       if (_equals_1) {
-        Link _RICHTEXT = this.n.RICHTEXT(session);
-        Query _appendSafe_1 = toNode.appendSafe(_RICHTEXT);
-        res.add(_appendSafe_1);
+        res.add(toNode.appendSafe(this.n.RICHTEXT(session)));
       } else {
         boolean _equals_2 = Objects.equal(ext, ".js");
         if (_equals_2) {
-          Link _MICRO_LIBRARY = this.n.MICRO_LIBRARY(session);
-          Query _appendSafe_2 = toNode.appendSafe(_MICRO_LIBRARY);
-          res.add(_appendSafe_2);
+          res.add(toNode.appendSafe(this.n.MICRO_LIBRARY(session)));
         } else {
           boolean _equals_3 = Objects.equal(ext, ".coffee");
           if (_equals_3) {
-            Link _COFFEESCRIPT = this.n.COFFEESCRIPT(session);
-            Query _appendSafe_3 = toNode.appendSafe(_COFFEESCRIPT);
-            res.add(_appendSafe_3);
+            res.add(toNode.appendSafe(this.n.COFFEESCRIPT(session)));
           } else {
             boolean _equals_4 = Objects.equal(ext, ".css");
             if (_equals_4) {
-              Link _CSS = this.n.CSS(session);
-              Query _appendSafe_4 = toNode.appendSafe(_CSS);
-              res.add(_appendSafe_4);
+              res.add(toNode.appendSafe(this.n.CSS(session)));
             } else {
               boolean _equals_5 = Objects.equal(ext, ".type");
               if (_equals_5) {
-                Link _ATTRIBUTE = this.n.ATTRIBUTE(session);
-                Query _appendSafe_5 = toNode.appendSafe(_ATTRIBUTE);
-                res.add(_appendSafe_5);
+                res.add(toNode.appendSafe(this.n.ATTRIBUTE(session)));
               }
             }
           }
@@ -178,28 +154,24 @@ public class ConvertUtils {
         cb.onSuccess(fileName);
       }
     };
-    ValueCallback<String> _embed = AsyncCommon.<String>embed(cb, _function);
-    this.getFileName(forNode, _embed);
+    this.getFileName(forNode, 
+      AsyncCommon.<String>embed(cb, _function));
   }
   
   public void getFileName(final Node fromNode, final ValueCallback<String> cb) {
     final Query qry = fromNode.select("./.meta/title");
-    ExceptionListener _asExceptionListener = CallbackUtils.<String>asExceptionListener(cb);
-    qry.catchExceptions(_asExceptionListener);
+    qry.catchExceptions(CallbackUtils.<String>asExceptionListener(cb));
     final UndefinedListener _function = new UndefinedListener() {
       @Override
       public void onUndefined(final UndefinedResult it) {
-        String _uri = fromNode.uri();
-        String _nameFromUri = ConvertUtils.getNameFromUri(_uri);
-        cb.onSuccess(_nameFromUri);
+        cb.onSuccess(ConvertUtils.getNameFromUri(fromNode.uri()));
       }
     };
     qry.catchUndefined(_function);
     final Closure<Node> _function_1 = new Closure<Node>() {
       @Override
       public void apply(final Node title) {
-        String _value = title.<String>value(String.class);
-        cb.onSuccess(_value);
+        cb.onSuccess(title.<String>value(String.class));
       }
     };
     qry.get(_function_1);

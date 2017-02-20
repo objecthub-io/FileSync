@@ -12,8 +12,7 @@ public class N {
   }
   
   public static Link getType(final Client client, final String type) {
-    String _typeLink = N.getTypeLink(type);
-    return client.link(_typeLink);
+    return client.link(N.getTypeLink(type));
   }
   
   public static String HTML_VALUE() {
@@ -77,7 +76,6 @@ public class N {
   }
   
   public Link RICHTEXT(final Client session) {
-    String _RICHTEXT = N.RICHTEXT();
-    return session.link(_RICHTEXT);
+    return session.link(N.RICHTEXT());
   }
 }

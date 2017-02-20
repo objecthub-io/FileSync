@@ -15,15 +15,11 @@ import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 @SuppressWarnings("all")
 public class FileUtils {
   public void saveMetadata(final FileItem forFolder, final Metadata metadata) {
-    FileItem _get = forFolder.get(".filesync-meta");
-    FileItem _get_1 = _get.get("nodes.xml");
-    MetadataUtilsJre.saveToFile(metadata, _get_1);
+    MetadataUtilsJre.saveToFile(metadata, forFolder.get(".filesync-meta").get("nodes.xml"));
   }
   
   public boolean hasMetadata(final FileItem forFolder) {
-    FileItem _assertFolder = forFolder.assertFolder(".filesync-meta");
-    FileItem _get = _assertFolder.get("nodes.xml");
-    return _get.exists();
+    return forFolder.assertFolder(".filesync-meta").get("nodes.xml").exists();
   }
   
   public Metadata assertMetadata(final FileItem forFolder) {
@@ -31,8 +27,7 @@ public class FileUtils {
     {
       final FileItem metadataFolder = forFolder.assertFolder(".filesync-meta");
       metadataFolder.setVisible(false);
-      FileItem _get = metadataFolder.get("nodes.xml");
-      boolean _exists = _get.exists();
+      boolean _exists = metadataFolder.get("nodes.xml").exists();
       boolean _not = (!_exists);
       if (_not) {
         final FileItem metadataFile = metadataFolder.createFile("nodes.xml");
@@ -46,9 +41,7 @@ public class FileUtils {
   }
   
   public Metadata loadMetadata(final FileItem forFolder) {
-    FileItem _get = forFolder.get(".filesync-meta");
-    FileItem _get_1 = _get.get("nodes.xml");
-    return MetadataUtilsJre.readFromFile(_get_1);
+    return MetadataUtilsJre.readFromFile(forFolder.get(".filesync-meta").get("nodes.xml"));
   }
   
   public void execute(final List<FileOperation> operations, final FileItem withFolder, final Metadata withMetadata) {
@@ -102,8 +95,7 @@ public class FileUtils {
     int _length = result.length();
     boolean _greaterThan = (_length > maxFileLength);
     if (_greaterThan) {
-      String _substring = result.substring(0, (maxFileLength - 1));
-      result = _substring;
+      result = result.substring(0, (maxFileLength - 1));
     }
     return result;
   }
@@ -127,21 +119,19 @@ public class FileUtils {
     final String works = (s + "");
     final String separator = "/";
     String filename = null;
-    String _replaceAll = works.replaceAll("\\\\", "/");
-    final int lastSeparatorIndex = _replaceAll.lastIndexOf(separator);
+    final int lastSeparatorIndex = works.replaceAll("\\\\", "/").lastIndexOf(separator);
     if ((lastSeparatorIndex == (-1))) {
       filename = s;
     } else {
-      String _substring = s.substring((lastSeparatorIndex + 1));
-      filename = _substring;
+      filename = s.substring((lastSeparatorIndex + 1));
     }
     final int extensionIndex = filename.lastIndexOf(".");
     if ((extensionIndex == (-1))) {
       return s;
     }
-    String _substring_1 = s.substring(0, (lastSeparatorIndex + 1));
-    String _substring_2 = filename.substring(0, extensionIndex);
-    return (_substring_1 + _substring_2);
+    String _substring = s.substring(0, (lastSeparatorIndex + 1));
+    String _substring_1 = filename.substring(0, extensionIndex);
+    return (_substring + _substring_1);
   }
   
   public String getSimpleName(final String forName) {
@@ -154,11 +144,11 @@ public class FileUtils {
       ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _length_1, true);
       for (final Integer i : _doubleDotLessThan) {
         {
-          char _charAt = n.charAt((i).intValue());
-          boolean found = FileUtils.isSimpleCharacter(_charAt);
+          boolean found = FileUtils.isSimpleCharacter(
+            n.charAt((i).intValue()));
           if (found) {
-            char _charAt_1 = n.charAt((i).intValue());
-            String _plus = (simple + Character.valueOf(_charAt_1));
+            char _charAt = n.charAt((i).intValue());
+            String _plus = (simple + Character.valueOf(_charAt));
             simple = _plus;
           } else {
             simple = (simple + "_");
