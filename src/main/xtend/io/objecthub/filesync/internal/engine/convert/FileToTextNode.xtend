@@ -187,7 +187,7 @@ class FileToTextNode implements Converter {
 
 		val fileName = metadata.get(source).name
 		
-		println('update file '+fileName)
+		//println('update file '+fileName)
 		
 		obtainValueNode(source, AsyncCommon.embed(cb, [ node |
 			val String content = node.value(String)

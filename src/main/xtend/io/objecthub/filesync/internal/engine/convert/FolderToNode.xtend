@@ -1,6 +1,9 @@
 package io.objecthub.filesync.internal.engine.convert
 
 import com.appjangle.api.Node
+import de.mxro.file.FileItem
+import delight.async.callbacks.ValueCallback
+import delight.simplelog.Log
 import io.objecthub.filesync.Converter
 import io.objecthub.filesync.FileOperation
 import io.objecthub.filesync.ItemMetadata
@@ -8,8 +11,6 @@ import io.objecthub.filesync.Metadata
 import io.objecthub.filesync.NetworkOperation
 import io.objecthub.filesync.internal.engine.FileUtils
 import io.objecthub.filesync.internal.engine.N
-import de.mxro.file.FileItem
-import delight.async.callbacks.ValueCallback
 import java.util.Date
 import java.util.LinkedList
 import java.util.List
@@ -138,7 +139,13 @@ class FolderToNode implements Converter {
 		val ops = new LinkedList<FileOperation>
 		ops.add(
 			[ ctx |
-				ctx.folder.deleteFolder(folderName)
+				if (ctx.folder.get(folderName).exists) {
+					ctx.folder.deleteFolder(folderName)
+					
+					} else {
+						Log.warn(this+": Cannot delete folder. The folder does not exist: "+folderName)
+					}
+				
 				ctx.metadata.remove(folderName)
 			])
 

@@ -120,7 +120,7 @@ class FileSync {
 							childParams.folder = childFolder
 							childParams.node = childNode
 							
-							println("Processing "+childNode.uri())
+							//println("Processing "+childNode.uri())
 							
 							if (childNode.uri().startsWith("http://localhost")) {
 								println("ERROR: Illegal node "+childNode.uri()+" with parent "+params.node.uri())

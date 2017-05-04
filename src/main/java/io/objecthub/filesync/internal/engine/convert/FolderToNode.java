@@ -6,6 +6,7 @@ import de.mxro.file.FileItem;
 import delight.async.AsyncCommon;
 import delight.async.callbacks.ValueCallback;
 import delight.functional.Closure;
+import delight.simplelog.Log;
 import io.nextweb.promise.DataOperation;
 import io.objecthub.filesync.Converter;
 import io.objecthub.filesync.FileOperation;
@@ -153,7 +154,14 @@ public class FolderToNode implements Converter {
     final FileOperation _function = new FileOperation() {
       @Override
       public void apply(final FileOperationContext ctx) {
-        ctx.folder().deleteFolder(folderName);
+        boolean _exists = ctx.folder().get(folderName).exists();
+        if (_exists) {
+          ctx.folder().deleteFolder(folderName);
+        } else {
+          String _plus = (FolderToNode.this + ": Cannot delete folder. The folder does not exist: ");
+          String _plus_1 = (_plus + folderName);
+          Log.warn(_plus_1);
+        }
         ctx.metadata().remove(folderName);
       }
     };

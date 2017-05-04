@@ -228,7 +228,6 @@ public class FileToTextNode implements Converter {
   @Override
   public void updateFiles(final FileItem folder, final Metadata metadata, final Node source, final ValueCallback<List<FileOperation>> cb) {
     final String fileName = metadata.get(source).name();
-    InputOutput.<String>println(("update file " + fileName));
     final Closure<Node> _function = new Closure<Node>() {
       @Override
       public void apply(final Node node) {
