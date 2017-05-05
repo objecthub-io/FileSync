@@ -145,7 +145,7 @@ class NetworkToFileOperations {
 		val res = new ArrayList<Node>(0)
 
 		for (child : children) {
-			if (metadata.get(child) == null) {
+			if (metadata.get(child) === null) {
 				res.add(child)
 			}
 		}
@@ -179,7 +179,7 @@ class NetworkToFileOperations {
 		for (node : children) {
 
 			// TODO: not yet supported, just update all
-			if (metadata.get(node) != null) {
+			if (metadata.get(node) !== null) {
 				res.add(node)
 			}
 

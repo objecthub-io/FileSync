@@ -5,6 +5,8 @@ import com.appjangle.api.LinkList;
 import com.appjangle.api.LinkListQuery;
 import com.appjangle.api.Node;
 import com.appjangle.api.Query;
+import com.appjangle.api.nodes.Bytes;
+import com.appjangle.api.nodes.Values;
 import com.google.common.base.Objects;
 import de.mxro.file.FileItem;
 import delight.async.AsyncCommon;
@@ -24,10 +26,12 @@ import io.objecthub.filesync.NetworkOperationContext;
 import io.objecthub.filesync.internal.engine.FileUtils;
 import io.objecthub.filesync.internal.engine.convert.ConvertUtils;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 
@@ -123,14 +127,29 @@ public class FileToTextNode implements Converter {
   
   @Override
   public void update(final Metadata metadata, final FileItem source, final ValueCallback<List<NetworkOperation>> cb) {
-    final String content = source.getText();
+    final String sourceText = source.getText();
+    Object contentVar = null;
+    boolean _startsWith = sourceText.startsWith("//BASE64//");
+    if (_startsWith) {
+      final int base64End = "//BASE64//".length();
+      int _indexOf = sourceText.indexOf("/", base64End);
+      final int mimeTypeEnd = (_indexOf - 1);
+      final String mimeType = sourceText.substring(base64End, mimeTypeEnd);
+      int _length = mimeType.length();
+      int _plus = (base64End + _length);
+      int _plus_1 = (_plus + 1);
+      final String data = sourceText.substring(_plus_1);
+      contentVar = Values.bytes(Base64.getDecoder().decode(data), mimeType);
+    } else {
+      contentVar = source.getText();
+    }
+    final Object content = contentVar;
     final String address = metadata.get(source.getName()).uri();
     final LinkedList<NetworkOperation> ops = new LinkedList<NetworkOperation>();
     final NetworkOperation _function = new NetworkOperation() {
       @Override
       public void apply(final NetworkOperationContext ctx, final ValueCallback<List<DataOperation<?>>> opscb) {
-        boolean _equals = Objects.equal(FileToTextNode.this.valueReference, null);
-        if (_equals) {
+        if ((FileToTextNode.this.valueReference == null)) {
           opscb.onSuccess(CollectionLiterals.<DataOperation<?>>newArrayList(ctx.session().link(address).setValueSafe(content)));
         } else {
           opscb.onSuccess(
@@ -209,8 +228,7 @@ public class FileToTextNode implements Converter {
   }
   
   public void obtainValueNode(final Node source, final ValueCallback<Node> cb) {
-    boolean _equals = Objects.equal(this.valueReference, null);
-    if (_equals) {
+    if ((this.valueReference == null)) {
       cb.onSuccess(source);
       return;
     }
@@ -231,48 +249,67 @@ public class FileToTextNode implements Converter {
     final Closure<Node> _function = new Closure<Node>() {
       @Override
       public void apply(final Node node) {
-        final String content = node.<String>value(String.class);
-        final LinkedList<FileOperation> ops = new LinkedList<FileOperation>();
-        final FileOperation _function = new FileOperation() {
-          @Override
-          public void apply(final FileOperationContext ctx) {
-            final FileItem file = ctx.folder().get(fileName);
-            String _text = file.getText();
-            boolean _notEquals = (!Objects.equal(_text, content));
-            if (_notEquals) {
-              file.setText(content);
-              Metadata _metadata = ctx.metadata();
-              _metadata.update(new ItemMetadata() {
-                @Override
-                public String name() {
-                  return fileName;
-                }
-                
-                @Override
-                public Date lastModified() {
-                  return file.lastModified();
-                }
-                
-                @Override
-                public String uri() {
-                  return source.uri();
-                }
-                
-                @Override
-                public String hash() {
-                  return file.hash();
-                }
-                
-                @Override
-                public String converter() {
-                  return FileToTextNode.this.id;
-                }
-              });
-            }
+        try {
+          String contentVar = null;
+          Object _value = node.value();
+          if ((_value instanceof Bytes)) {
+            Object _value_1 = node.value();
+            final Bytes bytes = ((Bytes) _value_1);
+            String _mimeType = bytes.getMimeType();
+            String _plus = ("//BASE64//" + _mimeType);
+            String _plus_1 = (_plus + "/");
+            byte[] _encode = Base64.getEncoder().encode(bytes.getBytes());
+            String _string = new String(_encode, "UTF-8");
+            String _plus_2 = (_plus_1 + _string);
+            contentVar = _plus_2;
+          } else {
+            contentVar = node.<String>value(String.class);
           }
-        };
-        ops.add(_function);
-        cb.onSuccess(ops);
+          final String content = contentVar;
+          final LinkedList<FileOperation> ops = new LinkedList<FileOperation>();
+          final FileOperation _function = new FileOperation() {
+            @Override
+            public void apply(final FileOperationContext ctx) {
+              final FileItem file = ctx.folder().get(fileName);
+              String _text = file.getText();
+              boolean _notEquals = (!Objects.equal(_text, content));
+              if (_notEquals) {
+                file.setText(content);
+                Metadata _metadata = ctx.metadata();
+                _metadata.update(new ItemMetadata() {
+                  @Override
+                  public String name() {
+                    return fileName;
+                  }
+                  
+                  @Override
+                  public Date lastModified() {
+                    return file.lastModified();
+                  }
+                  
+                  @Override
+                  public String uri() {
+                    return source.uri();
+                  }
+                  
+                  @Override
+                  public String hash() {
+                    return file.hash();
+                  }
+                  
+                  @Override
+                  public String converter() {
+                    return FileToTextNode.this.id;
+                  }
+                });
+              }
+            }
+          };
+          ops.add(_function);
+          cb.onSuccess(ops);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
       }
     };
     this.obtainValueNode(source, AsyncCommon.<Node>embed(cb, _function));

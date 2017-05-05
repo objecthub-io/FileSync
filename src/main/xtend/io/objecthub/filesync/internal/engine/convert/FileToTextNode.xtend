@@ -1,6 +1,8 @@
 package io.objecthub.filesync.internal.engine.convert
 
 import com.appjangle.api.Node
+import com.appjangle.api.nodes.Bytes
+import com.appjangle.api.nodes.Values
 import de.mxro.file.FileItem
 import delight.async.AsyncCommon
 import delight.async.callbacks.ValueCallback
@@ -11,6 +13,7 @@ import io.objecthub.filesync.ItemMetadata
 import io.objecthub.filesync.Metadata
 import io.objecthub.filesync.NetworkOperation
 import io.objecthub.filesync.internal.engine.FileUtils
+import java.util.Base64
 import java.util.LinkedList
 import java.util.List
 
@@ -96,8 +99,21 @@ class FileToTextNode implements Converter {
 
 	override update(Metadata metadata, FileItem source, ValueCallback<List<NetworkOperation>> cb) {
 
-		val content = source.text
+		val sourceText = source.text
 
+		var Object contentVar 
+		
+		if (sourceText.startsWith("//BASE64//")) {
+			val base64End = "//BASE64//".length
+			val mimeTypeEnd = sourceText.indexOf("/", base64End)-1
+			val mimeType = sourceText.substring(base64End, mimeTypeEnd)
+			val data = sourceText.substring(base64End+mimeType.length+1)
+			contentVar = Values.bytes(Base64.decoder.decode(data), mimeType)
+		} else {
+			contentVar = source.text
+		}
+		
+		val content = contentVar
 		val address = metadata.get(source.getName).uri
 
 		val ops = new LinkedList<NetworkOperation>
@@ -105,7 +121,7 @@ class FileToTextNode implements Converter {
 		ops.add(
 			[ ctx, opscb |
 
-			if (valueReference == null) {
+			if (valueReference === null) {
 				opscb.onSuccess(newArrayList(ctx.session.link(address).setValueSafe(content)))
 			} else {
 				opscb.onSuccess(
@@ -169,7 +185,7 @@ class FileToTextNode implements Converter {
 	}
 
 	def obtainValueNode(Node source, ValueCallback<Node> cb) {
-		if (valueReference == null) {
+		if (valueReference === null) {
 			cb.onSuccess(source)
 			return
 		}
@@ -190,8 +206,16 @@ class FileToTextNode implements Converter {
 		//println('update file '+fileName)
 		
 		obtainValueNode(source, AsyncCommon.embed(cb, [ node |
-			val String content = node.value(String)
-
+			
+			var String contentVar 
+			if (node.value() instanceof Bytes) {
+				// FIXME This does not yet work for storing byte data - text converter not triggered for such nodes.
+				val bytes = (node.value() as Bytes)
+				contentVar = "//BASE64//"+bytes.mimeType+"/"+new String(Base64.encoder.encode(bytes.bytes), "UTF-8")
+			} else {
+				contentVar= node.value(String)
+			}
+			val content = contentVar
 			val ops = new LinkedList<FileOperation>
 
 			ops.add(

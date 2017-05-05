@@ -5,7 +5,6 @@ import com.appjangle.api.Link;
 import com.appjangle.api.LinkList;
 import com.appjangle.api.LinkListQuery;
 import com.appjangle.api.Node;
-import com.google.common.base.Objects;
 import delight.async.AsyncCommon;
 import delight.async.Value;
 import delight.async.callbacks.ValueCallback;
@@ -205,8 +204,8 @@ public class NetworkToFileOperations {
       final ArrayList<Node> res = new ArrayList<Node>(0);
       for (final Node child : children) {
         ItemMetadata _get = this.metadata.get(child);
-        boolean _equals = Objects.equal(_get, null);
-        if (_equals) {
+        boolean _tripleEquals = (_get == null);
+        if (_tripleEquals) {
           res.add(child);
         }
       }
@@ -244,8 +243,8 @@ public class NetworkToFileOperations {
       final ArrayList<Node> res = new ArrayList<Node>(_size);
       for (final Node node : children) {
         ItemMetadata _get = this.metadata.get(node);
-        boolean _notEquals = (!Objects.equal(_get, null));
-        if (_notEquals) {
+        boolean _tripleNotEquals = (_get != null);
+        if (_tripleNotEquals) {
           res.add(node);
         }
       }
