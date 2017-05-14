@@ -18,16 +18,20 @@ public class SynchronizationState {
   public synchronized boolean addSynced(final Node n) {
     boolean _xblockexpression = false;
     {
-      boolean _contains = this.synced.contains(n.uri());
+      String _uri = n.uri();
+      boolean _contains = this.synced.contains(_uri);
       boolean _not = (!_contains);
-      Preconditions.checkState(_not, "Node was already synced [%s]", n.uri());
-      _xblockexpression = this.synced.add(n.uri());
+      String _uri_1 = n.uri();
+      Preconditions.checkState(_not, "Node was already synced [%s]", _uri_1);
+      String _uri_2 = n.uri();
+      _xblockexpression = this.synced.add(_uri_2);
     }
     return _xblockexpression;
   }
   
   public synchronized boolean wasSynced(final Node n) {
-    return this.synced.contains(n.uri());
+    String _uri = n.uri();
+    return this.synced.contains(_uri);
   }
   
   public SynchronizationState() {

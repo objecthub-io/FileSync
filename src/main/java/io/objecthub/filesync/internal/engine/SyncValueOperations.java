@@ -46,43 +46,62 @@ public class SyncValueOperations {
   }
   
   public void downloadValue(final Node node, final Metadata metadata, final FileItem folder) {
-    boolean _exists = folder.get("value.txt").exists();
+    FileItem _get = folder.get("value.txt");
+    boolean _exists = _get.exists();
     boolean _not = (!_exists);
     if (_not) {
       FileItem _createFile = folder.createFile("value.txt");
-      _createFile.setText(node.value().toString());
-      metadata.setValue(SyncValueOperations.createMetadata(node, folder.get("value.txt")));
+      Object _value = node.value();
+      String _string = _value.toString();
+      _createFile.setText(_string);
+      FileItem _get_1 = folder.get("value.txt");
+      ItemMetadata _createMetadata = SyncValueOperations.createMetadata(node, _get_1);
+      metadata.setValue(_createMetadata);
       return;
     }
-    final String oldText = folder.get("value.txt").getText();
-    String _string = node.value().toString();
-    boolean _notEquals = (!Objects.equal(oldText, _string));
+    FileItem _get_2 = folder.get("value.txt");
+    final String oldText = _get_2.getText();
+    Object _value_1 = node.value();
+    String _string_1 = _value_1.toString();
+    boolean _notEquals = (!Objects.equal(oldText, _string_1));
     if (_notEquals) {
-      FileItem _get = folder.get("value.txt");
-      _get.setText(node.value().toString());
-      metadata.setValue(SyncValueOperations.createMetadata(node, folder.get("value.txt")));
+      FileItem _get_3 = folder.get("value.txt");
+      Object _value_2 = node.value();
+      String _string_2 = _value_2.toString();
+      _get_3.setText(_string_2);
+      FileItem _get_4 = folder.get("value.txt");
+      ItemMetadata _createMetadata_1 = SyncValueOperations.createMetadata(node, _get_4);
+      metadata.setValue(_createMetadata_1);
     }
   }
   
   public void uploadValue(final Node node, final Metadata metadata, final FileItem folder, final ValueCallback<Success> cb) {
     final FileItem file = folder.get("value.txt");
-    Preconditions.checkState(file.exists());
-    long _time = metadata.value().lastModified().getTime();
-    long _time_1 = file.lastModified().getTime();
+    boolean _exists = file.exists();
+    Preconditions.checkState(_exists);
+    ItemMetadata _value = metadata.value();
+    Date _lastModified = _value.lastModified();
+    long _time = _lastModified.getTime();
+    Date _lastModified_1 = file.lastModified();
+    long _time_1 = _lastModified_1.getTime();
     boolean _greaterThan = (_time > _time_1);
     if (_greaterThan) {
-      final Query qry = node.setValueSafe(file.getText());
+      String _text = file.getText();
+      final Query qry = node.setValueSafe(_text);
       final ExceptionListener _function = new ExceptionListener() {
         @Override
         public void onFailure(final ExceptionResult it) {
-          cb.onFailure(it.exception());
+          Throwable _exception = it.exception();
+          cb.onFailure(_exception);
         }
       };
       qry.catchExceptions(_function);
       final Closure<Node> _function_1 = new Closure<Node>() {
         @Override
         public void apply(final Node it) {
-          metadata.setValue(SyncValueOperations.createMetadata(node, folder.get("value.txt")));
+          FileItem _get = folder.get("value.txt");
+          ItemMetadata _createMetadata = SyncValueOperations.createMetadata(node, _get);
+          metadata.setValue(_createMetadata);
           cb.onSuccess(Success.INSTANCE);
         }
       };

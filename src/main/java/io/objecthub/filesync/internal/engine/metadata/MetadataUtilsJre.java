@@ -8,6 +8,7 @@ import io.objecthub.filesync.Metadata;
 import io.objecthub.filesync.internal.engine.metadata.MetadataImpl;
 import io.objecthub.filesync.internal.engine.metadata.v01.ItemXml;
 import io.objecthub.filesync.internal.engine.metadata.v01.NodesXml;
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("all")
@@ -21,7 +22,8 @@ public class MetadataUtilsJre {
         return null;
       }
       final XStream xstream = new XStream();
-      Object _fromXML = xstream.fromXML(file.getText());
+      String _text = file.getText();
+      Object _fromXML = xstream.fromXML(_text);
       final NodesXml nodesXml = ((NodesXml) _fromXML);
       _xblockexpression = MetadataUtilsJre.toMetadata(nodesXml);
     }
@@ -49,7 +51,8 @@ public class MetadataUtilsJre {
     }
     final XStream xstream = new XStream();
     final NodesXml nodesXml = MetadataUtilsJre.toNodesXml(metadata);
-    file.setText(xstream.toXML(nodesXml));
+    String _xML = xstream.toXML(nodesXml);
+    file.setText(_xML);
   }
   
   public static NodesXml toNodesXml(final Metadata metadata) {
@@ -58,9 +61,12 @@ public class MetadataUtilsJre {
       NodesXml nodesXml = new NodesXml();
       List<ItemMetadata> _children = metadata.getChildren();
       for (final ItemMetadata item : _children) {
-        nodesXml.items.add(MetadataUtilsJre.toItemXml(item));
+        ItemXml _itemXml = MetadataUtilsJre.toItemXml(item);
+        nodesXml.items.add(_itemXml);
       }
-      nodesXml.value = MetadataUtilsJre.toItemXml(metadata.value());
+      ItemMetadata _value = metadata.value();
+      ItemXml _itemXml_1 = MetadataUtilsJre.toItemXml(_value);
+      nodesXml.value = _itemXml_1;
       _xblockexpression = nodesXml;
     }
     return _xblockexpression;
@@ -74,11 +80,16 @@ public class MetadataUtilsJre {
         return null;
       }
       final ItemXml itemXml = new ItemXml();
-      itemXml.converter = item.converter();
-      itemXml.lastModified = item.lastModified();
-      itemXml.hash = item.hash();
-      itemXml.name = item.name();
-      itemXml.uri = item.uri();
+      String _converter = item.converter();
+      itemXml.converter = _converter;
+      Date _lastModified = item.lastModified();
+      itemXml.lastModified = _lastModified;
+      String _hash = item.hash();
+      itemXml.hash = _hash;
+      String _name = item.name();
+      itemXml.name = _name;
+      String _uri = item.uri();
+      itemXml.uri = _uri;
       _xblockexpression = itemXml;
     }
     return _xblockexpression;

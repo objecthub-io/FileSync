@@ -53,10 +53,12 @@ public class ConverterCollection implements Converter {
     final Closure<List<Boolean>> _function_1 = new Closure<List<Boolean>>() {
       @Override
       public void apply(final List<Boolean> res) {
-        cb.onSuccess(Boolean.valueOf(res.contains(Boolean.valueOf(true))));
+        boolean _contains = res.contains(Boolean.valueOf(true));
+        cb.onSuccess(Boolean.valueOf(_contains));
       }
     };
-    AsyncCommon.<Converter, Boolean>forEach(this.converters, _function, AsyncCommon.<List<Boolean>>embed(cb, _function_1));
+    ValueCallback<List<Boolean>> _embed = AsyncCommon.<List<Boolean>>embed(cb, _function_1);
+    AsyncCommon.<Converter, Boolean>forEach(this.converters, _function, _embed);
   }
   
   private void findConverter(final FileItem forFileItem, final ValueCallback<Converter> cb) {
@@ -84,20 +86,23 @@ public class ConverterCollection implements Converter {
         cb.onFailure(_exception);
       }
     };
-    AsyncCommon.<Converter, Object>forEach(this.converters, _function, AsyncCommon.<List<Object>>embed(cb, _function_1));
+    ValueCallback<List<Object>> _embed = AsyncCommon.<List<Object>>embed(cb, _function_1);
+    AsyncCommon.<Converter, Object>forEach(this.converters, _function, _embed);
   }
   
   private void findConverter(final ItemMetadata forItem, final ValueCallback<Converter> cb) {
     for (final Converter c : this.converters) {
-      boolean _equals = c.id().equals(forItem.converter());
+      String _id = c.id();
+      String _converter = forItem.converter();
+      boolean _equals = _id.equals(_converter);
       if (_equals) {
         cb.onSuccess(c);
         return;
       }
     }
-    String _converter = forItem.converter();
+    String _converter_1 = forItem.converter();
     String _plus = (((("Cannot find converter for [" + forItem) + "].\n") + 
-      "  Required Converter: ") + _converter);
+      "  Required Converter: ") + _converter_1);
     String _plus_1 = (_plus + "\n");
     String _plus_2 = (_plus_1 + 
       "  Defined Converters: ");
@@ -119,7 +124,8 @@ public class ConverterCollection implements Converter {
             }
           }
         };
-        c.worksOn(forNode, AsyncCommon.<Boolean>embed(itmcb, _function));
+        ValueCallback<Boolean> _embed = AsyncCommon.<Boolean>embed(itmcb, _function);
+        c.worksOn(forNode, _embed);
       }
     };
     final Closure<List<Object>> _function_1 = new Closure<List<Object>>() {
@@ -135,7 +141,8 @@ public class ConverterCollection implements Converter {
         cb.onFailure(_exception);
       }
     };
-    AsyncCommon.<Converter, Object>forEach(this.converters, _function, AsyncCommon.<List<Object>>embed(cb, _function_1));
+    ValueCallback<List<Object>> _embed = AsyncCommon.<List<Object>>embed(cb, _function_1);
+    AsyncCommon.<Converter, Object>forEach(this.converters, _function, _embed);
   }
   
   @Override
@@ -146,18 +153,22 @@ public class ConverterCollection implements Converter {
         converter.createNodes(metadata, source, cb);
       }
     };
-    this.findConverter(source, AsyncCommon.<Converter>embed(cb, _function));
+    ValueCallback<Converter> _embed = AsyncCommon.<Converter>embed(cb, _function);
+    this.findConverter(source, _embed);
   }
   
   @Override
   public void update(final Metadata metadata, final FileItem source, final ValueCallback<List<NetworkOperation>> cb) {
+    String _name = source.getName();
+    ItemMetadata _get = metadata.get(_name);
     final Closure<Converter> _function = new Closure<Converter>() {
       @Override
       public void apply(final Converter converter) {
         converter.update(metadata, source, cb);
       }
     };
-    this.findConverter(metadata.get(source.getName()), AsyncCommon.<Converter>embed(cb, _function));
+    ValueCallback<Converter> _embed = AsyncCommon.<Converter>embed(cb, _function);
+    this.findConverter(_get, _embed);
   }
   
   @Override
@@ -168,14 +179,17 @@ public class ConverterCollection implements Converter {
         converter.deleteNodes(metadata, cachedFile, cb);
       }
     };
-    this.findConverter(cachedFile, AsyncCommon.<Converter>embed(cb, _function));
+    ValueCallback<Converter> _embed = AsyncCommon.<Converter>embed(cb, _function);
+    this.findConverter(cachedFile, _embed);
   }
   
   @Override
   public void createFiles(final FileItem folder, final Metadata metadata, final Node source, final ValueCallback<List<FileOperation>> cb) {
-    boolean _endsWith = source.uri().endsWith("Types");
+    String _uri = source.uri();
+    boolean _endsWith = _uri.endsWith("Types");
     if (_endsWith) {
-      new FolderToNode().createFiles(folder, metadata, source, cb);
+      FolderToNode _folderToNode = new FolderToNode();
+      _folderToNode.createFiles(folder, metadata, source, cb);
       return;
     }
     final Closure<Converter> _function = new Closure<Converter>() {
@@ -184,18 +198,21 @@ public class ConverterCollection implements Converter {
         converter.createFiles(folder, metadata, source, cb);
       }
     };
-    this.findConverter(source, AsyncCommon.<Converter>embed(cb, _function));
+    ValueCallback<Converter> _embed = AsyncCommon.<Converter>embed(cb, _function);
+    this.findConverter(source, _embed);
   }
   
   @Override
   public void updateFiles(final FileItem folder, final Metadata metadata, final Node source, final ValueCallback<List<FileOperation>> cb) {
+    ItemMetadata _get = metadata.get(source);
     final Closure<Converter> _function = new Closure<Converter>() {
       @Override
       public void apply(final Converter converter) {
         converter.updateFiles(folder, metadata, source, cb);
       }
     };
-    this.findConverter(metadata.get(source), AsyncCommon.<Converter>embed(cb, _function));
+    ValueCallback<Converter> _embed = AsyncCommon.<Converter>embed(cb, _function);
+    this.findConverter(_get, _embed);
   }
   
   @Override
@@ -206,7 +223,8 @@ public class ConverterCollection implements Converter {
         converter.removeFiles(folder, metadata, item, cb);
       }
     };
-    this.findConverter(item, AsyncCommon.<Converter>embed(cb, _function));
+    ValueCallback<Converter> _embed = AsyncCommon.<Converter>embed(cb, _function);
+    this.findConverter(item, _embed);
   }
   
   @Override

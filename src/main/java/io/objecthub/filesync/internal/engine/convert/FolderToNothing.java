@@ -9,6 +9,7 @@ import io.objecthub.filesync.FileOperation;
 import io.objecthub.filesync.ItemMetadata;
 import io.objecthub.filesync.Metadata;
 import io.objecthub.filesync.NetworkOperation;
+import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
@@ -32,7 +33,8 @@ public class FolderToNothing implements Converter {
   
   @Override
   public void createNodes(final Metadata metadata, final FileItem source, final ValueCallback<List<NetworkOperation>> cb) {
-    cb.onSuccess(CollectionLiterals.<NetworkOperation>newArrayList());
+    ArrayList<NetworkOperation> _newArrayList = CollectionLiterals.<NetworkOperation>newArrayList();
+    cb.onSuccess(_newArrayList);
   }
   
   @Override

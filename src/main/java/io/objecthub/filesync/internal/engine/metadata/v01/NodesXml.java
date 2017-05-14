@@ -2,6 +2,7 @@ package io.objecthub.filesync.internal.engine.metadata.v01;
 
 import io.objecthub.filesync.internal.engine.metadata.v01.ItemXml;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -15,7 +16,8 @@ public class NodesXml implements Serializable {
   public ItemXml value;
   
   public NodesXml() {
-    this.items = CollectionLiterals.<ItemXml>newArrayList();
+    ArrayList<ItemXml> _newArrayList = CollectionLiterals.<ItemXml>newArrayList();
+    this.items = _newArrayList;
     this.value = null;
   }
   

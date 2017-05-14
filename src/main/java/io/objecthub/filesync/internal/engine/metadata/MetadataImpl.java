@@ -5,6 +5,8 @@ import com.google.common.base.Objects;
 import io.objecthub.filesync.ItemMetadata;
 import io.objecthub.filesync.Metadata;
 import io.objecthub.filesync.internal.engine.metadata.v01.ItemXml;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -18,7 +20,8 @@ public class MetadataImpl implements Metadata {
   private ItemMetadata value;
   
   public MetadataImpl() {
-    this.items = CollectionLiterals.<ItemMetadata>newArrayList();
+    ArrayList<ItemMetadata> _newArrayList = CollectionLiterals.<ItemMetadata>newArrayList();
+    this.items = _newArrayList;
   }
   
   @Override
@@ -55,7 +58,8 @@ public class MetadataImpl implements Metadata {
   public Metadata add(final ItemMetadata itemMetadata) {
     MetadataImpl _xblockexpression = null;
     {
-      this.items.add(this.toXml(itemMetadata));
+      ItemXml _xml = this.toXml(itemMetadata);
+      this.items.add(_xml);
       _xblockexpression = this;
     }
     return _xblockexpression;
@@ -75,13 +79,15 @@ public class MetadataImpl implements Metadata {
   public Metadata update(final ItemMetadata itemMetadata) {
     MetadataImpl _xblockexpression = null;
     {
-      final int foundIdx = this.indexOfChild(itemMetadata.name());
+      String _name = itemMetadata.name();
+      final int foundIdx = this.indexOfChild(_name);
       if ((foundIdx == (-1))) {
-        String _name = itemMetadata.name();
-        String _plus = ("Cannot update child which is not defined: " + _name);
+        String _name_1 = itemMetadata.name();
+        String _plus = ("Cannot update child which is not defined: " + _name_1);
         throw new RuntimeException(_plus);
       }
-      this.items.set(foundIdx, this.toXml(itemMetadata));
+      ItemXml _xml = this.toXml(itemMetadata);
+      this.items.set(foundIdx, _xml);
       _xblockexpression = this;
     }
     return _xblockexpression;
@@ -105,11 +111,16 @@ public class MetadataImpl implements Metadata {
     ItemXml _xblockexpression = null;
     {
       final ItemXml item = new ItemXml();
-      item.name = itemMetadata.name();
-      item.uri = itemMetadata.uri();
-      item.lastModified = itemMetadata.lastModified();
-      item.hash = itemMetadata.hash();
-      item.converter = itemMetadata.converter();
+      String _name = itemMetadata.name();
+      item.name = _name;
+      String _uri = itemMetadata.uri();
+      item.uri = _uri;
+      Date _lastModified = itemMetadata.lastModified();
+      item.lastModified = _lastModified;
+      String _hash = itemMetadata.hash();
+      item.hash = _hash;
+      String _converter = itemMetadata.converter();
+      item.converter = _converter;
       _xblockexpression = item;
     }
     return _xblockexpression;

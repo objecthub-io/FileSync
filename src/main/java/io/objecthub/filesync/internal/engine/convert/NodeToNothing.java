@@ -9,6 +9,7 @@ import io.objecthub.filesync.FileOperation;
 import io.objecthub.filesync.ItemMetadata;
 import io.objecthub.filesync.Metadata;
 import io.objecthub.filesync.NetworkOperation;
+import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
@@ -47,7 +48,8 @@ public class NodeToNothing implements Converter {
   
   @Override
   public void createFiles(final FileItem folder, final Metadata metadata, final Node source, final ValueCallback<List<FileOperation>> cb) {
-    cb.onSuccess(CollectionLiterals.<FileOperation>newArrayList());
+    ArrayList<FileOperation> _newArrayList = CollectionLiterals.<FileOperation>newArrayList();
+    cb.onSuccess(_newArrayList);
   }
   
   @Override

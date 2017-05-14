@@ -32,27 +32,29 @@ public class NetworkUtils {
           return onNode;
         }
       };
+      int _size = ops.size();
       final Closure<List<Success>> _function = new Closure<List<Success>>() {
         @Override
         public void apply(final List<Success> it) {
           cb.onSuccess(Success.INSTANCE);
         }
       };
-      final Aggregator<Success> opscbs = AsyncCommon.<Success>collect(ops.size(), 
-        AsyncCommon.<List<Success>>embed(cb, _function));
+      ValueCallback<List<Success>> _embed = AsyncCommon.<List<Success>>embed(cb, _function);
+      final Aggregator<Success> opscbs = AsyncCommon.<Success>collect(_size, _embed);
       for (final NetworkOperation op : ops) {
         final Closure<List<DataOperation<?>>> _function_1 = new Closure<List<DataOperation<?>>>() {
           @Override
           public void apply(final List<DataOperation<?>> qries) {
             final ValueCallback<Success> opscbsitem = opscbs.createCallback();
+            int _size = qries.size();
             final Closure<List<Success>> _function = new Closure<List<Success>>() {
               @Override
               public void apply(final List<Success> it) {
                 opscbsitem.onSuccess(Success.INSTANCE);
               }
             };
-            final Aggregator<Success> cbs = AsyncCommon.<Success>collect(qries.size(), 
-              AsyncCommon.<List<Success>>embed(cb, _function));
+            ValueCallback<List<Success>> _embed = AsyncCommon.<List<Success>>embed(cb, _function);
+            final Aggregator<Success> cbs = AsyncCommon.<Success>collect(_size, _embed);
             for (final DataOperation<?> qry : qries) {
               {
                 final ValueCallback<Success> itmcb = cbs.createCallback();
@@ -60,7 +62,8 @@ public class NetworkUtils {
                   final ExceptionListener _function_1 = new ExceptionListener() {
                     @Override
                     public void onFailure(final ExceptionResult er) {
-                      itmcb.onFailure(er.exception());
+                      Throwable _exception = er.exception();
+                      itmcb.onFailure(_exception);
                     }
                   };
                   ((Query)qry).catchExceptions(_function_1);
@@ -77,7 +80,8 @@ public class NetworkUtils {
                     final ExceptionListener _function_3 = new ExceptionListener() {
                       @Override
                       public void onFailure(final ExceptionResult er) {
-                        itmcb.onFailure(er.exception());
+                        Throwable _exception = er.exception();
+                        itmcb.onFailure(_exception);
                       }
                     };
                     safeQry.catchExceptions(_function_3);
@@ -98,10 +102,11 @@ public class NetworkUtils {
             }
           }
         };
-        op.apply(ctx, 
-          AsyncCommon.<List<DataOperation<?>>>embed(cb, _function_1));
+        ValueCallback<List<DataOperation<?>>> _embed_1 = AsyncCommon.<List<DataOperation<?>>>embed(cb, _function_1);
+        op.apply(ctx, _embed_1);
       }
-      _xblockexpression = onNode.client().commit();
+      Client _client = onNode.client();
+      _xblockexpression = _client.commit();
     }
     return _xblockexpression;
   }
