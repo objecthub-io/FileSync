@@ -18,7 +18,6 @@ import io.objecthub.filesync.NetworkOperationContext;
 import io.objecthub.filesync.internal.engine.FileUtils;
 import io.objecthub.filesync.internal.engine.N;
 import io.objecthub.filesync.internal.engine.convert.ConvertUtils;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,15 +40,12 @@ public class FolderToNode implements Converter {
   
   @Override
   public void createNodes(final Metadata metadata, final FileItem source, final ValueCallback<List<NetworkOperation>> cb) {
-    String _name = source.getName();
-    final String simpleName = this.futils.getSimpleName(_name);
+    final String simpleName = this.futils.getSimpleName(source.getName());
     final LinkedList<NetworkOperation> ops = new LinkedList<NetworkOperation>();
     final NetworkOperation _function = new NetworkOperation() {
       @Override
       public void apply(final NetworkOperationContext ctx, final ValueCallback<List<DataOperation<?>>> opscb) {
-        Node _parent = ctx.parent();
-        String _name = source.getName();
-        final Query baseNode = _parent.appendSafe(_name, ("./" + simpleName));
+        final Query baseNode = ctx.parent().appendSafe(source.getName(), ("./" + simpleName));
         metadata.add(
           new ItemMetadata() {
             @Override
@@ -64,16 +60,14 @@ public class FolderToNode implements Converter {
             
             @Override
             public String uri() {
-              Node _parent = ctx.parent();
-              String _uri = _parent.uri();
+              String _uri = ctx.parent().uri();
               String _plus = (_uri + "/");
               return (_plus + simpleName);
             }
             
             @Override
             public String hash() {
-              int _hashCode = simpleName.hashCode();
-              return Integer.valueOf(_hashCode).toString();
+              return Integer.valueOf(simpleName.hashCode()).toString();
             }
             
             @Override
@@ -81,8 +75,8 @@ public class FolderToNode implements Converter {
               return FolderToNode.ID;
             }
           });
-        ArrayList<DataOperation<?>> _newArrayList = CollectionLiterals.<DataOperation<?>>newArrayList(baseNode);
-        opscb.onSuccess(_newArrayList);
+        opscb.onSuccess(
+          CollectionLiterals.<DataOperation<?>>newArrayList(baseNode));
       }
     };
     ops.add(_function);
@@ -91,8 +85,7 @@ public class FolderToNode implements Converter {
   
   @Override
   public void update(final Metadata metadata, final FileItem source, final ValueCallback<List<NetworkOperation>> cb) {
-    ArrayList<NetworkOperation> _newArrayList = CollectionLiterals.<NetworkOperation>newArrayList();
-    cb.onSuccess(_newArrayList);
+    cb.onSuccess(CollectionLiterals.<NetworkOperation>newArrayList());
   }
   
   @Override
@@ -110,8 +103,7 @@ public class FolderToNode implements Converter {
           @Override
           public void apply(final FileOperationContext ctx) {
             final String folderName = FolderToNode.this.futils.toFileSystemSafeName(rawFolderName, false, 50);
-            FileItem _folder = ctx.folder();
-            _folder.assertFolder(folderName);
+            ctx.folder().assertFolder(folderName);
             Metadata _metadata = ctx.metadata();
             _metadata.add(
               new ItemMetadata() {
@@ -132,8 +124,7 @@ public class FolderToNode implements Converter {
                 
                 @Override
                 public String hash() {
-                  int _hashCode = folderName.hashCode();
-                  return Integer.valueOf(_hashCode).toString();
+                  return Integer.valueOf(folderName.hashCode()).toString();
                 }
                 
                 @Override
@@ -147,14 +138,13 @@ public class FolderToNode implements Converter {
         cb.onSuccess(ops);
       }
     };
-    ValueCallback<String> _embed = AsyncCommon.<String>embed(cb, _function);
-    this.utils.getFileName(source, _embed);
+    this.utils.getFileName(source, 
+      AsyncCommon.<String>embed(cb, _function));
   }
   
   @Override
   public void updateFiles(final FileItem folder, final Metadata metadata, final Node source, final ValueCallback<List<FileOperation>> cb) {
-    ArrayList<FileOperation> _newArrayList = CollectionLiterals.<FileOperation>newArrayList();
-    cb.onSuccess(_newArrayList);
+    cb.onSuccess(CollectionLiterals.<FileOperation>newArrayList());
   }
   
   @Override
@@ -164,19 +154,15 @@ public class FolderToNode implements Converter {
     final FileOperation _function = new FileOperation() {
       @Override
       public void apply(final FileOperationContext ctx) {
-        FileItem _folder = ctx.folder();
-        FileItem _get = _folder.get(folderName);
-        boolean _exists = _get.exists();
+        boolean _exists = ctx.folder().get(folderName).exists();
         if (_exists) {
-          FileItem _folder_1 = ctx.folder();
-          _folder_1.deleteFolder(folderName);
+          ctx.folder().deleteFolder(folderName);
         } else {
           String _plus = (FolderToNode.this + ": Cannot delete folder. The folder does not exist: ");
           String _plus_1 = (_plus + folderName);
           Log.warn(_plus_1);
         }
-        Metadata _metadata = ctx.metadata();
-        _metadata.remove(folderName);
+        ctx.metadata().remove(folderName);
       }
     };
     ops.add(_function);
