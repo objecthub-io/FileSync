@@ -3,6 +3,8 @@
 FileSync
 ========
 
+**Deprication Notice**: This project has been deprecated. Look out for follow up projects on [ObjectHub](https://objecthub.io) and [StellarDB](https://www.stellardb.org).
+
 A Desktop App for Synchronizing Files with Appjangle Data
 
 ## Motivation
